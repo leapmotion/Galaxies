@@ -1,6 +1,7 @@
 ﻿Shader "Unlit/PointSimShader" {
   Properties {
-    _MainTex ("Texture", 2D) = "white" {}
+    _PrevPositions ("Prev Positions", 2D) = "white" {}
+    _CurrPositions ("Curr Positions", 2D) = "white" {}
     _Noise   ("Noise", 2D) = "white" {}
     _Force   ("Force", Float) = 0.01
   }
