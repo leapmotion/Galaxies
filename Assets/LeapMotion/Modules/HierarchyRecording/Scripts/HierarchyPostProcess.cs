@@ -137,7 +137,7 @@ namespace Leap.Unity.Recording {
       var timelineClip = animationTrack.CreateClip(clip);
       timelineClip.duration = clip.length;
       timelineClip.asset = clip;
-      timelineClip.underlyingAsset = clip;
+      //timelineClip.underlyingAsset = clip;
 
       //Try to generate a leap recording if we have leap data
       RecordingTrack recordingTrack = null;
