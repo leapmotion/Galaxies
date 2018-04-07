@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 using Leap.Unity;
 using Leap.Unity.DevGui;
 using Leap.Unity.Attributes;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Camera))]
 public class GalaxyRenderer : MonoBehaviour {
@@ -109,6 +110,7 @@ public class GalaxyRenderer : MonoBehaviour {
   private float _diagonalFilter = 0.5f;
 
   private Camera _myCamera;
+  private CommandBuffer _renderCommands;
 
   private RenderState _currRenderState;
   private RenderState _prevRenderState;
@@ -138,15 +140,22 @@ public class GalaxyRenderer : MonoBehaviour {
   }
 
   private void OnEnable() {
+    _renderCommands = new CommandBuffer();
+    _renderCommands.name = "Draw Starts";
+
     _myCamera = GetComponent<Camera>();
     Camera.onPostRender += drawCamera;
 
     uploadGradientTextures();
 
     StartCoroutine(endOfFrameCoroutine());
+
+    updateCameraCommandBuffer();
   }
 
   private void OnDisable() {
+    _renderCommands.Dispose();
+
     Camera.onPostRender -= drawCamera;
   }
 
@@ -176,46 +185,69 @@ public class GalaxyRenderer : MonoBehaviour {
     }
   }
 
-  private void OnRenderImage(RenderTexture source, RenderTexture destination) {
-    _prevRenderState.CopyFrom(_currRenderState);
+  [ContextMenu("Update Command Buffer")]
+  private void updateCameraCommandBuffer() {
+    _myCamera.RemoveCommandBuffer(CameraEvent.AfterForwardOpaque, _renderCommands);
+    generateCommandBuffer();
+    _myCamera.AddCommandBuffer(CameraEvent.AfterForwardOpaque, _renderCommands);
+  }
 
-    if (!_renderStars) {
-      Graphics.Blit(source, destination);
+  private void generateCommandBuffer() {
+    _renderCommands.Clear();
+
+    if (_currRenderState.currPosition == null) {
       return;
     }
 
-    RenderTexture tex = RenderTexture.GetTemporary(source.width, source.height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear, 1);
+    RenderTextureDescriptor desc = new RenderTextureDescriptor(_myCamera.pixelWidth, _myCamera.pixelHeight, RenderTextureFormat.ARGB32, 0);
+    desc.sRGB = false;
+    desc.msaaSamples = 1;
+    desc.autoGenerateMips = false;
+    desc.useMipMap = false;
 
-    Graphics.SetRenderTarget(tex.colorBuffer, source.depthBuffer);
-    GL.Clear(clearDepth: false, clearColor: true, backgroundColor: Color.black);
+    int id = Shader.PropertyToID(START_TEX_PROPERTY);
+    RenderTargetIdentifier identifier = new RenderTargetIdentifier(id);
 
-    drawStars();
+    _renderCommands.GetTemporaryRT(id, desc);
+    _renderCommands.SetRenderTarget(identifier);
 
-    if (_enableBoxFilter) {
-      _postProcessMat.EnableKeyword(BOX_FILTER_KEYWORD);
-      _postProcessMat.SetFloat(ADJACENT_PROPERTY, _adjacentFilter);
-      _postProcessMat.SetFloat(DIAGONAL_PROPERTY, _diagonalFilter);
-    } else {
-      _postProcessMat.DisableKeyword(BOX_FILTER_KEYWORD);
+    _renderCommands.ClearRenderTarget(clearDepth: false, clearColor: true, backgroundColor: Color.black);
+
+    Material mat = null;
+
+    switch (_renderType) {
+      case RenderType.Point:
+        mat = _pointMat;
+        break;
+      case RenderType.Quad:
+        mat = _quadMat;
+        break;
+      case RenderType.PointBright:
+        mat = _lightMat;
+        break;
     }
 
-    _postProcessMat.SetFloat(GAMMA_PROPERTY, _gammaValue);
+    _renderCommands.DrawProcedural(Matrix4x4.identity, mat, 0, MeshTopology.Points, _currRenderState.currPosition.width * _currRenderState.currPosition.height);
+    _renderCommands.SetGlobalTexture("_Stars", identifier);
 
-    _postProcessMat.SetTexture(START_TEX_PROPERTY, tex);
-    Graphics.Blit(source, destination, _postProcessMat, (int)preset.postProcessMode);
-
-    RenderTexture.ReleaseTemporary(tex);
+    _renderCommands.Blit(identifier, new RenderTargetIdentifier(BuiltinRenderTextureType.CameraTarget), _postProcessMat, (int)preset.postProcessMode);
+    _renderCommands.ReleaseTemporaryRT(id);
   }
 
-  private void drawCamera(Camera camera) {
-    if (_myCamera == camera) {
-      return;
+  private void updateMaterials() {
+    //Post process material
+    {
+      if (_enableBoxFilter) {
+        _postProcessMat.EnableKeyword(BOX_FILTER_KEYWORD);
+        _postProcessMat.SetFloat(ADJACENT_PROPERTY, _adjacentFilter);
+        _postProcessMat.SetFloat(DIAGONAL_PROPERTY, _diagonalFilter);
+      } else {
+        _postProcessMat.DisableKeyword(BOX_FILTER_KEYWORD);
+      }
+
+      _postProcessMat.SetFloat(GAMMA_PROPERTY, _gammaValue);
     }
 
-    drawStars();
-  }
-
-  private void drawStars() {
     Material mat = null;
 
     switch (_renderType) {
@@ -297,11 +329,23 @@ public class GalaxyRenderer : MonoBehaviour {
 #if UNITY_EDITOR
     uploadGradientTextures();
 #endif
+  }
 
-    if (_renderStars) {
-      mat.SetPass(0);
-      Graphics.DrawProcedural(MeshTopology.Points, _currRenderState.currPosition.width * _currRenderState.currPosition.height);
+  private void OnPreRender() {
+    updateMaterials();
+  }
+
+  private void OnPostRender() {
+    _prevRenderState.CopyFrom(_currRenderState);
+  }
+
+  private void drawCamera(Camera camera) {
+    if (_myCamera == camera) {
+      return;
     }
+
+    //drawStars();
+    //TODO
   }
 
   private void uploadGradientTextures() {

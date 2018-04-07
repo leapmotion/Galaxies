@@ -1,7 +1,6 @@
 ﻿Shader "Galaxy/PostProcess" {
 	Properties {
 		_MainTex ("Texture", 2D) = "white" {}
-    _Stars   ("Stars",   2D) = "white" {}
     _Gradient("Gradient", 2D) = "white" {}
 	}
 
