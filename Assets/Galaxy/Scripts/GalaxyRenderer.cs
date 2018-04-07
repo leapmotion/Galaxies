@@ -199,7 +199,7 @@ public class GalaxyRenderer : MonoBehaviour {
       return;
     }
 
-    RenderTextureDescriptor desc = new RenderTextureDescriptor(_myCamera.pixelWidth, _myCamera.pixelHeight, RenderTextureFormat.ARGB32, 0);
+    RenderTextureDescriptor desc = new RenderTextureDescriptor(_myCamera.pixelWidth, _myCamera.pixelHeight, RenderTextureFormat.ARGBHalf, 0);
     desc.sRGB = false;
     desc.msaaSamples = 1;
     desc.autoGenerateMips = false;

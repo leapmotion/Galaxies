@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -207,7 +207,7 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 0
+  m_HDR: 1
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 1
@@ -273,7 +273,7 @@ MonoBehaviour:
   _blackHoleMat: {fileID: 2100000, guid: 9d30d8bee9d12a742a4235d76c16b104, type: 2}
   _renderStars: 1
   _starSize: 0.0099
-  _starBrightness: 0.192
+  _starBrightness: 1
   _renderType: 2
   _pointMat: {fileID: 2100000, guid: 28e9d03bbe30a5a498613801de4babc0, type: 2}
   _quadMat: {fileID: 2100000, guid: e782bced61a904542a2237b51b6caf3b, type: 2}
