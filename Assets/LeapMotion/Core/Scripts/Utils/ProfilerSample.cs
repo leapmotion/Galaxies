@@ -1,6 +1,6 @@
 /******************************************************************************
- * Copyright (C) Leap Motion, Inc. 2011-2017.                                 *
- * Leap Motion proprietary and  confidential.                                 *
+ * Copyright (C) Leap Motion, Inc. 2011-2018.                                 *
+ * Leap Motion proprietary and confidential.                                  *
  *                                                                            *
  * Use subject to the terms of the Leap Motion SDK Agreement available at     *
  * https://developer.leapmotion.com/sdk_agreement, or another agreement       *
@@ -28,11 +28,7 @@ namespace Leap.Unity {
     }
 
     public ProfilerSample(string sampleName, UnityEngine.Object obj) {
-      if (obj == null) {
-        Profiler.BeginSample(sampleName);
-      } else {
-        Profiler.BeginSample(sampleName, obj);
-      }
+      Profiler.BeginSample(sampleName, obj);
     }
 
     public void Dispose() {
