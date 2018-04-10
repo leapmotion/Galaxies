@@ -6,6 +6,7 @@ using Leap.Unity;
 using Leap.Unity.DevGui;
 using Leap.Unity.Attributes;
 using UnityEngine.Rendering;
+using Leap.Unity.Animation;
 
 [RequireComponent(typeof(Camera))]
 public class GalaxyRenderer : MonoBehaviour {
@@ -73,7 +74,7 @@ public class GalaxyRenderer : MonoBehaviour {
   [SerializeField, DevValue]
   private float _starBrightness;
 
-  [Disable]
+  //[Disable]
   [SerializeField]
   private RenderType _renderType;
 
@@ -151,6 +152,8 @@ public class GalaxyRenderer : MonoBehaviour {
     StartCoroutine(endOfFrameCoroutine());
 
     updateCameraCommandBuffer();
+
+    Tween.AfterDelay(0.1f, () => generateCommandBuffer());
   }
 
   private void OnDisable() {

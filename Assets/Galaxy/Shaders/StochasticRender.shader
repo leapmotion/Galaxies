@@ -41,7 +41,7 @@
     uv.z = 0;
     uv.w = 0;
 
-	float4 currPosition, prevPosition;
+	  float4 currPosition, prevPosition;
 
 #ifdef INTERPOLATION_CROSSES_TEX_BOUNDARY
 	{
