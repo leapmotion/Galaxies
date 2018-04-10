@@ -271,8 +271,8 @@ MonoBehaviour:
   _blackHoleMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 3}
   _blackHoleMat: {fileID: 2100000, guid: 9d30d8bee9d12a742a4235d76c16b104, type: 2}
   _renderStars: 1
-  _starSize: 0.0288
-  _starBrightness: 0.0005
+  _starSize: 0.0152
+  _starBrightness: 0.002
   _renderType: 1
   _pointMat: {fileID: 2100000, guid: 28e9d03bbe30a5a498613801de4babc0, type: 2}
   _quadMat: {fileID: 2100000, guid: e782bced61a904542a2237b51b6caf3b, type: 2}
