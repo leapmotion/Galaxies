@@ -123,12 +123,11 @@ GameObject:
   - component: {fileID: 87496857}
   - component: {fileID: 87496861}
   - component: {fileID: 87496860}
-  - component: {fileID: 87496859}
-  - component: {fileID: 87496858}
   - component: {fileID: 87496863}
   - component: {fileID: 87496864}
   - component: {fileID: 87496862}
   - component: {fileID: 87496865}
+  - component: {fileID: 87496858}
   m_Layer: 0
   m_Name: CenterEye
   m_TagString: MainCamera
@@ -157,25 +156,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 87496856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfb12777e12bf9941b23356a343f5016, type: 3}
+  m_Script: {fileID: 11500000, guid: abb0e8dd6c809854f8fea5e0976884f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _eyeType:
-    _orderType: 3
-  _overrideEyePosition: 0
---- !u!114 &87496859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11462492, guid: 18d6bf9063dcb1842be63f411fd9fc26,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 87496856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4499ae867a57a90449cb9069c466ade0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _depthTextureMode: 0
+  editTimePose: 0
+  _frameOptimization: 0
+  _physicsExtrapolation: 1
+  _physicsExtrapolationTime: 0.011111111
+  _workerThreadProfiling: 0
+  _allowManualDeviceOffset: 0
+  _deviceOffsetYAxis: 0
+  _deviceOffsetZAxis: 0.12
+  _deviceTiltXAxis: 5
+  _temporalWarpingMode: 0
+  _customWarpAdjustment: 17
+  _updateHandInPrecull: 0
 --- !u!20 &87496860
 Camera:
   m_ObjectHideFlags: 0
@@ -497,7 +492,6 @@ MonoBehaviour:
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  graspHoldWarpingEnabled__curIgnored: 1
   _overrideInteractionLayer: 0
   _interactionLayer:
     layerIndex: 0
@@ -689,7 +683,6 @@ MonoBehaviour:
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  graspHoldWarpingEnabled__curIgnored: 1
   _overrideInteractionLayer: 0
   _interactionLayer:
     layerIndex: 0
@@ -760,6 +753,7 @@ MonoBehaviour:
   _hoverEnabled: 1
   _contactEnabled: 1
   _graspingEnabled: 1
+  _leapProvider: {fileID: 0}
   _handDataMode: 0
   enabledPrimaryHoverFingertips: 0101010000
 --- !u!4 &452099831
@@ -845,7 +839,6 @@ MonoBehaviour:
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  graspHoldWarpingEnabled__curIgnored: 1
   _overrideInteractionLayer: 0
   _interactionLayer:
     layerIndex: 0
@@ -929,6 +922,7 @@ MonoBehaviour:
   _hoverEnabled: 1
   _contactEnabled: 1
   _graspingEnabled: 1
+  _leapProvider: {fileID: 0}
   _handDataMode: 1
   enabledPrimaryHoverFingertips: 0101010000
 --- !u!1 &541350268
@@ -1150,6 +1144,21 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1134423590}
     m_Modifications:
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: jointList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: localRotations.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: localPositions.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4000011567466448, guid: 2aa010a1e75292e49a24f3f71bb9cddb, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2103,7 +2112,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4542260197562760, guid: 2aa010a1e75292e49a24f3f71bb9cddb, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4542260197562760, guid: 2aa010a1e75292e49a24f3f71bb9cddb, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2134,6 +2143,71 @@ Prefab:
       propertyPath: m_LocalRotation.x
       value: 0.000000014901158
       objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: fingers.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: fingers.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: fingers.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: fingers.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: fingers.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: palm
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: DeformPositionsInFingers
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: deformPositionsState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: UseMetaCarpals
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: modelFingerPointing.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: modelFingerPointing.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: modelFingerPointing.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+        type: 2}
+      propertyPath: modelPalmFacing.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2aa010a1e75292e49a24f3f71bb9cddb, type: 2}
   m_IsPrefabParent: 0
@@ -2142,6 +2216,12 @@ Transform:
   m_PrefabParentObject: {fileID: 4542260197562760, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
     type: 2}
   m_PrefabInternal: {fileID: 690065969}
+--- !u!114 &690065971 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114994683550464134, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
+    type: 2}
+  m_PrefabInternal: {fileID: 690065969}
+  m_Script: {fileID: 11500000, guid: 9e0ed5922e911b343b8400997c95409c, type: 3}
 --- !u!137 &690065972 stripped
 SkinnedMeshRenderer:
   m_PrefabParentObject: {fileID: 137091762490896592, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
@@ -3310,7 +3390,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4430945870454064, guid: 2276723046d707c4f94d431ceb80ab92, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4606666689288932, guid: 2276723046d707c4f94d431ceb80ab92, type: 2}
       propertyPath: m_LocalRotation.x
@@ -3365,6 +3445,12 @@ Transform:
   m_PrefabParentObject: {fileID: 4430945870454064, guid: 2276723046d707c4f94d431ceb80ab92,
     type: 2}
   m_PrefabInternal: {fileID: 772335581}
+--- !u!114 &772335583 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114245269363414434, guid: 2276723046d707c4f94d431ceb80ab92,
+    type: 2}
+  m_PrefabInternal: {fileID: 772335581}
+  m_Script: {fileID: 11500000, guid: 9e0ed5922e911b343b8400997c95409c, type: 3}
 --- !u!137 &772335584 stripped
 SkinnedMeshRenderer:
   m_PrefabParentObject: {fileID: 137723638835135990, guid: 2276723046d707c4f94d431ceb80ab92,
@@ -3645,7 +3731,6 @@ MonoBehaviour:
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  graspHoldWarpingEnabled__curIgnored: 1
   _overrideInteractionLayer: 0
   _interactionLayer:
     layerIndex: 0
@@ -3731,6 +3816,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1134423590}
+  - component: {fileID: 1134423591}
   m_Layer: 0
   m_Name: HandModels
   m_TagString: Untagged
@@ -3753,6 +3839,32 @@ Transform:
   m_Father: {fileID: 1148930581}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1134423591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1134423589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c592f16851a620743868a31232613370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _leapProvider: {fileID: 87496858}
+  ModelPool:
+  - GroupName: 
+    _handModelManager: {fileID: 0}
+    LeftModel: {fileID: 690065971}
+    IsLeftToBeSpawned: 0
+    RightModel: {fileID: 772335583}
+    IsRightToBeSpawned: 0
+    IsEnabled: 1
+    CanDuplicate: 0
+    HandPostProcesses:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: Leap.Unity.Hands+HandEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
 --- !u!1 &1148676134
 GameObject:
   m_ObjectHideFlags: 0
@@ -3811,11 +3923,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8f8839ee256bb458e1657c1ee40572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deviceOffsets:
-  - DeviceName: openVR
-    HeightOffset: -1.5
-  moveUpKey: 0
-  moveDownKey: 0
+  _roomScaleHeightOffset: 1.6
+  autoRecenterOnUserPresence: 1
+  enableRuntimeAdjustment: 1
+  stepUpKey: 273
+  stepDownKey: 274
   stepSize: 0.1
 --- !u!4 &1148930581
 Transform:
@@ -4611,7 +4723,6 @@ MonoBehaviour:
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  graspHoldWarpingEnabled__curIgnored: 1
   _overrideInteractionLayer: 0
   _interactionLayer:
     layerIndex: 0
@@ -4804,7 +4915,6 @@ MonoBehaviour:
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  graspHoldWarpingEnabled__curIgnored: 1
   _overrideInteractionLayer: 0
   _interactionLayer:
     layerIndex: 0
@@ -4935,7 +5045,6 @@ MonoBehaviour:
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  graspHoldWarpingEnabled__curIgnored: 1
   _overrideInteractionLayer: 0
   _interactionLayer:
     layerIndex: 0
@@ -5184,7 +5293,6 @@ MonoBehaviour:
   _allowMultiGrasp: 0
   _moveObjectWhenGrasped: 1
   graspedMovementType: 0
-  graspHoldWarpingEnabled__curIgnored: 1
   _overrideInteractionLayer: 0
   _interactionLayer:
     layerIndex: 0
