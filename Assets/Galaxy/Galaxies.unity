@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 249d5f66f74c5864a8625b4f15a3f2f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _presetSelection: 0
+  _presetSelection: 1
   _basic: {fileID: 11400000, guid: 99a6f97a817b49e49b0e03026c3a6fef, type: 2}
   _speedRamp: {fileID: 11400000, guid: 903fb7abdb1cf22408ab96aa199b290a, type: 2}
   _accelRamp: {fileID: 11400000, guid: 3ea5228263c4f6b4293e571e695bb4b7, type: 2}
@@ -272,7 +272,7 @@ MonoBehaviour:
   _pointMat: {fileID: 2100000, guid: 28e9d03bbe30a5a498613801de4babc0, type: 2}
   _quadMat: {fileID: 2100000, guid: e782bced61a904542a2237b51b6caf3b, type: 2}
   _lightMat: {fileID: 2100000, guid: 53d7d531484e74c48912b680d8ae7e0d, type: 2}
-  preset: {fileID: 11400000, guid: df867983269c8474db9ef205ff0b26bf, type: 2}
+  preset: {fileID: 11400000, guid: 903fb7abdb1cf22408ab96aa199b290a, type: 2}
   _postProcessMat: {fileID: 2100000, guid: 2e0337d99c2de644195a8d4d2d6968ec, type: 2}
   _galaxyCombineMat: {fileID: 2100000, guid: be0d56383f7f7f643b5e6cf5e81f921c, type: 2}
   _gammaValue: 1
@@ -2305,7 +2305,7 @@ MonoBehaviour:
   galaxyRenderer: {fileID: 87496864}
   starGravConstant: 0.00001
   minDiscRadius: 0.03
-  maxDiscRadius: 0.618
+  maxDiscRadius: 1.748
   maxDiscHeight: 0.053
   radiusDistribution:
     serializedVersion: 2
@@ -2320,23 +2320,23 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.8535381
-      value: 0.5437393
-      inSlope: 2.0690603
-      outSlope: 2.0690603
+      time: 0.865746
+      value: 0.697286
+      inSlope: 2.6707864
+      outSlope: 2.6707864
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.27602503
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 4.4500074
-      outSlope: 4.4500074
+      time: 1.000111
+      value: 2.0790799
+      inSlope: 17.34186
+      outSlope: 17.34186
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.3382607
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
@@ -2365,6 +2365,7 @@ MonoBehaviour:
   nextPos: {fileID: 8400000, guid: 18f7ea8f36308ff4597cc3d6773d17d3, type: 2}
   simulateMat: {fileID: 2100000, guid: 48377e56b3c8be043af18aef4ce8c687, type: 2}
   simulationTime: 0
+  pow: 7
 --- !u!4 &1245413932
 Transform:
   m_ObjectHideFlags: 0

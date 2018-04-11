@@ -236,6 +236,8 @@ public unsafe class GalaxySimulation : MonoBehaviour {
   private MaterialPropertyBlock _trailPropertyBlock;
   private Dictionary<int, int[]> _trailIndexCache = new Dictionary<int, int[]>();
 
+  public float pow = 5;
+
   [DevButton("Reset Sim")]
   public unsafe void ResetSimulation() {
     if (mainState != null) {
@@ -281,9 +283,13 @@ public unsafe class GalaxySimulation : MonoBehaviour {
       }
     }
 
-    Texture2D tex = new Texture2D(512, 1, TextureFormat.RFloat, mipmap: false, linear: true);
+    Texture2D tex = new Texture2D(2048, 1, TextureFormat.RFloat, mipmap: false, linear: true);
     for (int i = 0; i < tex.width; i++) {
-      tex.SetPixel(i, 0, new Color(radiusDistribution.Evaluate(i / 512.0f), 0, 0, 0));
+      float t = 1 - i / 2047f;
+      t = Mathf.Pow(t, pow);
+
+      tex.SetPixel(i, 0, new Color(t, 0, 0, 0));
+      //tex.SetPixel(i, 0, new Color(radiusDistribution.Evaluate(i / 2048.0f), 0, 0, 0));
     }
     tex.Apply();
     tex.filterMode = FilterMode.Bilinear;
