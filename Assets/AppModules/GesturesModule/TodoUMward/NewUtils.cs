@@ -333,57 +333,6 @@ public static class NewUtils2 {
 
   #region Enumerators
 
-  /// <summary>
-  /// Slices numLines horizontal line Rects from this Rect and returns an enumerator that
-  /// will return each line Rect.
-  /// 
-  /// The height of each line is the height of the Rect divided by the number of lines
-  /// requested.
-  /// </summary>
-  public static HorizontalLineRectEnumerator TakeAllLines(this Rect r, int numLines) {
-    return new HorizontalLineRectEnumerator(r, numLines);
-  }
-
-  public struct HorizontalLineRectEnumerator : IQueryOp<Rect> {
-    Rect rect;
-    int numLines;
-    int index;
-
-    public HorizontalLineRectEnumerator(Rect rect, int numLines) {
-      this.rect = rect;
-      this.numLines = numLines;
-      this.index = -1;
-    }
-
-    public float eachHeight { get { return this.rect.height / numLines; } }
-
-    public Rect Current {
-      get { return new Rect(rect.x, rect.y + eachHeight * index, rect.width, eachHeight); }
-    }
-    public bool MoveNext() {
-      index += 1;
-      return index < numLines;
-    }
-    public HorizontalLineRectEnumerator GetEnumerator() { return this; }
-
-    public bool TryGetNext(out Rect t) {
-      if (MoveNext()) {
-        t = Current; return true;
-      }
-      else {
-        t = default(Rect); return false;
-      }
-    }
-
-    public void Reset() {
-      index = -1;
-    }
-
-    public QueryWrapper<Rect, HorizontalLineRectEnumerator> Query() {
-      return new QueryWrapper<Rect, HorizontalLineRectEnumerator>(this);
-    }
-  }
-
   #endregion
 
   #endregion
