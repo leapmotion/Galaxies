@@ -203,8 +203,8 @@ public class GalaxyRenderer : MonoBehaviour {
   private void updateCameraCommandBuffer() {
     generateCommandBuffer();
 
-    _myCamera.RemoveCommandBuffer(CameraEvent.AfterForwardOpaque, _renderStarCommands);
-    _myCamera.AddCommandBuffer(CameraEvent.AfterForwardOpaque, _renderStarCommands);
+    _myCamera.RemoveCommandBuffer(CameraEvent.AfterForwardAlpha, _renderStarCommands);
+    _myCamera.AddCommandBuffer(CameraEvent.AfterForwardAlpha, _renderStarCommands);
 
     _myCamera.RemoveCommandBuffer(CameraEvent.AfterImageEffects, _combineStarCommands);
     _myCamera.AddCommandBuffer(CameraEvent.AfterImageEffects, _combineStarCommands);
