@@ -95,6 +95,9 @@ public class GalaxyRenderer : MonoBehaviour {
   [SerializeField]
   private Material _postProcessMat;
 
+  [SerializeField]
+  private Material _galaxyCombineMat;
+
   [Range(0, 2)]
   [SerializeField, DevValue]
   private float _gammaValue = 0.3f;
@@ -111,7 +114,9 @@ public class GalaxyRenderer : MonoBehaviour {
   private float _diagonalFilter = 0.5f;
 
   private Camera _myCamera;
-  private CommandBuffer _renderCommands;
+  private CommandBuffer _renderStarCommands;
+  private CommandBuffer _combineStarCommands;
+  private RenderTexture _backupTex;
 
   private RenderState _currRenderState;
   private RenderState _prevRenderState;
@@ -141,8 +146,11 @@ public class GalaxyRenderer : MonoBehaviour {
   }
 
   private void OnEnable() {
-    _renderCommands = new CommandBuffer();
-    _renderCommands.name = "Draw Starts";
+    _renderStarCommands = new CommandBuffer();
+    _renderStarCommands.name = "Draw Starts";
+
+    _combineStarCommands = new CommandBuffer();
+    _combineStarCommands.name = "Combine Stars";
 
     _myCamera = GetComponent<Camera>();
     Camera.onPostRender += drawCamera;
@@ -157,7 +165,10 @@ public class GalaxyRenderer : MonoBehaviour {
   }
 
   private void OnDisable() {
-    _renderCommands.Dispose();
+    _renderStarCommands.Dispose();
+    _combineStarCommands.Dispose();
+
+    _backupTex.Release();
 
     Camera.onPostRender -= drawCamera;
   }
@@ -190,31 +201,30 @@ public class GalaxyRenderer : MonoBehaviour {
 
   [ContextMenu("Update Command Buffer")]
   private void updateCameraCommandBuffer() {
-    _myCamera.RemoveCommandBuffer(CameraEvent.AfterForwardOpaque, _renderCommands);
     generateCommandBuffer();
-    _myCamera.AddCommandBuffer(CameraEvent.AfterForwardOpaque, _renderCommands);
+
+    _myCamera.RemoveCommandBuffer(CameraEvent.AfterForwardOpaque, _renderStarCommands);
+    _myCamera.AddCommandBuffer(CameraEvent.AfterForwardOpaque, _renderStarCommands);
+
+    _myCamera.RemoveCommandBuffer(CameraEvent.AfterImageEffects, _combineStarCommands);
+    _myCamera.AddCommandBuffer(CameraEvent.AfterImageEffects, _combineStarCommands);
   }
 
   private void generateCommandBuffer() {
-    _renderCommands.Clear();
+    _renderStarCommands.Clear();
+    _combineStarCommands.Clear();
 
     if (_currRenderState.currPosition == null) {
       return;
     }
 
-    RenderTextureDescriptor desc = new RenderTextureDescriptor(_myCamera.pixelWidth, _myCamera.pixelHeight, RenderTextureFormat.ARGBHalf, 0);
-    desc.sRGB = false;
-    desc.msaaSamples = 1;
-    desc.autoGenerateMips = false;
-    desc.useMipMap = false;
+    if (_backupTex == null) {
+      _backupTex = new RenderTexture(_myCamera.pixelWidth, _myCamera.pixelHeight, 0, RenderTextureFormat.ARGBHalf, RenderTextureReadWrite.Linear);
+    }
 
-    int id = Shader.PropertyToID(START_TEX_PROPERTY);
-    RenderTargetIdentifier identifier = new RenderTargetIdentifier(id);
-
-    _renderCommands.GetTemporaryRT(id, desc);
-    _renderCommands.SetRenderTarget(identifier);
-
-    _renderCommands.ClearRenderTarget(clearDepth: false, clearColor: true, backgroundColor: Color.black);
+    _renderStarCommands.Blit(BuiltinRenderTextureType.CameraTarget, _backupTex);
+    _renderStarCommands.SetRenderTarget(BuiltinRenderTextureType.CameraTarget);
+    _renderStarCommands.ClearRenderTarget(clearDepth: false, clearColor: true, backgroundColor: Color.black);
 
     Material mat = null;
 
@@ -230,11 +240,9 @@ public class GalaxyRenderer : MonoBehaviour {
         break;
     }
 
-    _renderCommands.DrawProcedural(Matrix4x4.identity, mat, 0, MeshTopology.Points, _currRenderState.currPosition.width * _currRenderState.currPosition.height);
-    _renderCommands.SetGlobalTexture("_Stars", identifier);
+    _renderStarCommands.DrawProcedural(Matrix4x4.identity, mat, 0, MeshTopology.Points, _currRenderState.currPosition.width * _currRenderState.currPosition.height);
 
-    _renderCommands.Blit(identifier, new RenderTargetIdentifier(BuiltinRenderTextureType.CameraTarget), _postProcessMat, (int)preset.postProcessMode);
-    _renderCommands.ReleaseTemporaryRT(id);
+    _combineStarCommands.Blit(_backupTex, new RenderTargetIdentifier(BuiltinRenderTextureType.CameraTarget), _galaxyCombineMat);
   }
 
   private void updateMaterials() {
