@@ -167,12 +167,12 @@
       ENDCG
     }
 
-	//Pass 2: perform drag calculations
-	Pass {
-	  CGPROGRAM
-      #pragma vertex vert
-	  #pragma fragment applyDrag
-	  ENDCG
-	}
+	  //Pass 2: perform drag calculations
+    Pass {
+	    CGPROGRAM
+        #pragma vertex vert
+	      #pragma fragment applyDrag
+	    ENDCG
+	  }
   }
 }

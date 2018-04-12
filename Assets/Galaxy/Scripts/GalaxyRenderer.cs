@@ -311,18 +311,7 @@ public class GalaxyRenderer : MonoBehaviour {
       mat.DisableKeyword(CROSS_TEX_KEYWORD);
     }
 
-    switch (preset.blitMode) {
-      case RenderPreset.BlitMode.BySpeed:
-        mat.SetFloat("_PreScalar", preset.preScalar / _sim.timescale);
-        break;
-      case RenderPreset.BlitMode.ByAccel:
-        mat.SetFloat("_PreScalar", preset.preScalar / _sim.timescale / _sim.timescale);
-        break;
-      default:
-        mat.SetFloat("_PreScalar", preset.preScalar);
-        break;
-    }
-
+    mat.SetFloat("_PreScalar", preset.preScalar);
     mat.SetFloat("_PostScalar", preset.postScalar);
 
     mat.SetMatrix("_ToWorldMat", _displayAnchor.localToWorldMatrix);
