@@ -346,17 +346,27 @@ public class GalaxyRenderer : MonoBehaviour {
     updateMaterials();
   }
 
-  private void OnPostRender() {
-    _prevRenderState.CopyFrom(_currRenderState);
-  }
-
   private void drawCamera(Camera camera) {
     if (_myCamera == camera) {
       return;
     }
 
-    //drawStars();
-    //TODO
+    Material mat = null;
+
+    switch (_renderType) {
+      case RenderType.Point:
+        mat = _pointMat;
+        break;
+      case RenderType.Quad:
+        mat = _quadMat;
+        break;
+      case RenderType.PointBright:
+        mat = _lightMat;
+        break;
+    }
+
+    mat.SetPass(0);
+    Graphics.DrawProcedural(MeshTopology.Points, _currRenderState.currPosition.width * _currRenderState.currPosition.height);
   }
 
   private void uploadGradientTextures() {
