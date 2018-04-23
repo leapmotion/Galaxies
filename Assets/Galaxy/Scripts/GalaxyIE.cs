@@ -177,6 +177,6 @@ public class GalaxyIE : MonoBehaviour, IPropertyMultiplier {
     float percent = Mathf.InverseLerp(_distRange.x, _distRange.y, minDist);
     float curvedPercent = _distCurve.Evaluate(percent);
 
-    multiplier = curvedPercent;
+    multiplier = canAct ? curvedPercent : 1f;
   }
 }
