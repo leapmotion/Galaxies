@@ -16,7 +16,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Leap.Unity.Interaction {
+namespace Leap.Unity.Interaction
+{
 
   public enum ContactForceMode { Object, UI };
 
@@ -34,7 +35,8 @@ namespace Leap.Unity.Interaction {
   /// component may be referred to as interaction objects.
   /// </summary>
   [RequireComponent(typeof(Rigidbody))]
-  public class InteractionBehaviour : MonoBehaviour, IInteractionBehaviour {
+  public class InteractionBehaviour : MonoBehaviour, IInteractionBehaviour
+  {
 
     public const float MAX_ANGULAR_VELOCITY = 100F;
 
@@ -61,6 +63,18 @@ namespace Leap.Unity.Interaction {
       get {
         return _closestHoveringHand == null ? null
                                             : _closestHoveringHand.leapHand;
+      }
+    }
+
+    public Leap.Unity.Pose worldPose {
+      get {
+        return new Pose(_rigidbody.position, _rigidbody.rotation);
+      }
+    }
+
+    public Leap.Unity.Pose worldDeltaPose {
+      get {
+        return Pose.identity;
       }
     }
 
@@ -346,7 +360,7 @@ namespace Leap.Unity.Interaction {
     /// not provide pre- and post-solve data in its callback signature.
     /// </remarks>
     public GraspedMovementEvent OnGraspedMovement = (preSolvedPos, preSolvedRot,
-                                                     solvedPos,    solvedRot,
+                                                     solvedPos, solvedRot,
                                                      graspingControllers) => { };
 
     /// <summary>
@@ -454,8 +468,7 @@ namespace Leap.Unity.Interaction {
     public Vector3 GetGraspPoint(InteractionController intController) {
       if (intController.graspedObject == this as IInteractionBehaviour) {
         return intController.GetGraspPoint();
-      }
-      else {
+      } else {
         Debug.LogError("Cannot get this object's grasp point: It is not currently grasped "
                      + "by the provided interaction controller.", intController);
         return Vector3.zero;
@@ -564,9 +577,9 @@ namespace Leap.Unity.Interaction {
     }
 
     private Rigidbody _rigidbody;
-    #if UNITY_EDITOR
-    new 
-    #endif
+#if UNITY_EDITOR
+    new
+#endif
     /// <summary> The Rigidbody associated with this interaction object. </summary>
     public Rigidbody rigidbody {
       get { return _rigidbody; }
@@ -684,7 +697,8 @@ namespace Leap.Unity.Interaction {
       }
     }
 
-    public enum GraspedMovementType {
+    public enum GraspedMovementType
+    {
       Inherit,
       Kinematic,
       Nonkinematic
@@ -885,8 +899,7 @@ namespace Leap.Unity.Interaction {
 
       if (!hasColliders) {
         return (this.rigidbody.position - worldPosition).magnitude;
-      }
-      else {
+      } else {
         return closestComparativeColliderDistance;
       }
     }
@@ -982,8 +995,7 @@ namespace Leap.Unity.Interaction {
         foreach (var controller in tempControllers) {
           controller.ClearHoverTrackingForObject(this);
         }
-      }
-      finally {
+      } finally {
         tempControllers.Clear();
         Pool<HashSet<InteractionController>>.Recycle(tempControllers);
       }
@@ -1063,8 +1075,7 @@ namespace Leap.Unity.Interaction {
         foreach (var controller in tempControllers) {
           controller.ClearPrimaryHoverTracking();
         }
-      }
-      finally {
+      } finally {
         tempControllers.Clear();
         Pool<HashSet<InteractionController>>.Recycle(tempControllers);
       }
@@ -1147,8 +1158,7 @@ namespace Leap.Unity.Interaction {
         foreach (var controller in tempControllers) {
           controller.ClearContactTrackingForObject(this);
         }
-      }
-      finally {
+      } finally {
         tempControllers.Clear();
         Pool<HashSet<InteractionController>>.Recycle(tempControllers);
       }
@@ -1159,7 +1169,7 @@ namespace Leap.Unity.Interaction {
     #region Grasping
 
     private HashSet<InteractionController> _graspingControllers = new HashSet<InteractionController>();
-    
+
     private bool _wasKinematicBeforeGrasp;
     private bool _justGrasped = false;
 
@@ -1307,9 +1317,9 @@ namespace Leap.Unity.Interaction {
 
     public void StayGrasped(List<InteractionController> controllers) {
       if (moveObjectWhenGrasped) {
-        Vector3    origPosition = rigidbody.position;
+        Vector3 origPosition = rigidbody.position;
         Quaternion origRotation = rigidbody.rotation;
-        Vector3    newPosition;
+        Vector3 newPosition;
         Quaternion newRotation;
 
         graspedPoseHandler.GetGraspedPosition(out newPosition, out newRotation);
@@ -1446,12 +1456,10 @@ namespace Leap.Unity.Interaction {
         // Update the object's layer based on interaction state.
         if (ignoreContact) {
           layer = noContactLayer;
-        }
-        else {
+        } else {
           if (isGrasped) {
             layer = noContactLayer;
-          }
-          else {
+          } else {
             layer = interactionLayer;
           }
         }
@@ -1532,8 +1540,7 @@ namespace Leap.Unity.Interaction {
        && (rigidbody.constraints & RigidbodyConstraints.FreezePositionZ) > 0) {
         _isPositionLocked = true;
         return;
-      }
-      else {
+      } else {
         _isPositionLocked = false;
 
         Joint[] joints = rigidbody.GetComponents<Joint>();
@@ -1580,7 +1587,8 @@ namespace Leap.Unity.Interaction {
     [SerializeField]
     private EnumEventTable _eventTable;
 
-    public enum EventType {
+    public enum EventType
+    {
       HoverBegin = 100,
       HoverEnd = 101,
       HoverStay = 102,
@@ -1614,39 +1622,38 @@ namespace Leap.Unity.Interaction {
       // constructed yet.
       if (_eventTable == null) _eventTable = new EnumEventTable();
 
-      setupCallback(ref OnHoverBegin,                     EventType.HoverBegin);
-      setupCallback(ref OnHoverEnd,                       EventType.HoverEnd);
-      setupCallback(ref OnHoverStay,                      EventType.HoverStay);
-      setupCallback(ref OnPerControllerHoverBegin,        EventType.PerControllerHoverBegin);
-      setupCallback(ref OnPerControllerHoverEnd,          EventType.PerControllerHoverEnd);
+      setupCallback(ref OnHoverBegin, EventType.HoverBegin);
+      setupCallback(ref OnHoverEnd, EventType.HoverEnd);
+      setupCallback(ref OnHoverStay, EventType.HoverStay);
+      setupCallback(ref OnPerControllerHoverBegin, EventType.PerControllerHoverBegin);
+      setupCallback(ref OnPerControllerHoverEnd, EventType.PerControllerHoverEnd);
 
-      setupCallback(ref OnPrimaryHoverBegin,              EventType.PrimaryHoverBegin);
-      setupCallback(ref OnPrimaryHoverEnd,                EventType.PrimaryHoverEnd);
-      setupCallback(ref OnPrimaryHoverStay,               EventType.PrimaryHoverStay);
+      setupCallback(ref OnPrimaryHoverBegin, EventType.PrimaryHoverBegin);
+      setupCallback(ref OnPrimaryHoverEnd, EventType.PrimaryHoverEnd);
+      setupCallback(ref OnPrimaryHoverStay, EventType.PrimaryHoverStay);
       setupCallback(ref OnPerControllerPrimaryHoverBegin, EventType.PerControllerPrimaryHoverBegin);
-      setupCallback(ref OnPerControllerPrimaryHoverEnd,   EventType.PerControllerPrimaryHoverEnd);
+      setupCallback(ref OnPerControllerPrimaryHoverEnd, EventType.PerControllerPrimaryHoverEnd);
 
-      setupCallback(ref OnGraspBegin,                     EventType.GraspBegin);
-      setupCallback(ref OnGraspEnd,                       EventType.GraspEnd);
-      setupCallback(ref OnGraspStay,                      EventType.GraspStay);
-      setupCallback(ref OnPerControllerGraspBegin,        EventType.PerControllerGraspBegin);
-      setupCallback(ref OnPerControllerGraspEnd,          EventType.PerControllerGraspEnd);
+      setupCallback(ref OnGraspBegin, EventType.GraspBegin);
+      setupCallback(ref OnGraspEnd, EventType.GraspEnd);
+      setupCallback(ref OnGraspStay, EventType.GraspStay);
+      setupCallback(ref OnPerControllerGraspBegin, EventType.PerControllerGraspBegin);
+      setupCallback(ref OnPerControllerGraspEnd, EventType.PerControllerGraspEnd);
 
-      setupCallback(ref OnSuspensionBegin,                EventType.SuspensionBegin);
-      setupCallback(ref OnSuspensionEnd,                  EventType.SuspensionEnd);
+      setupCallback(ref OnSuspensionBegin, EventType.SuspensionBegin);
+      setupCallback(ref OnSuspensionEnd, EventType.SuspensionEnd);
 
-      setupCallback(ref OnContactBegin,                   EventType.ContactBegin);
-      setupCallback(ref OnContactEnd,                     EventType.ContactEnd);
-      setupCallback(ref OnContactStay,                    EventType.ContactStay);
-      setupCallback(ref OnPerControllerContactBegin,      EventType.PerControllerContactBegin);
-      setupCallback(ref OnPerControllerContactEnd,        EventType.PerControllerContactEnd);
+      setupCallback(ref OnContactBegin, EventType.ContactBegin);
+      setupCallback(ref OnContactEnd, EventType.ContactEnd);
+      setupCallback(ref OnContactStay, EventType.ContactStay);
+      setupCallback(ref OnPerControllerContactBegin, EventType.PerControllerContactBegin);
+      setupCallback(ref OnPerControllerContactEnd, EventType.PerControllerContactEnd);
     }
 
     private void setupCallback(ref Action action, EventType type) {
       if (_eventTable.HasUnityEvent((int)type)) {
         action += () => _eventTable.Invoke((int)type);
-      }
-      else {
+      } else {
         action += () => { };
       }
     }
@@ -1654,8 +1661,7 @@ namespace Leap.Unity.Interaction {
     private void setupCallback<T>(ref Action<T> action, EventType type) {
       if (_eventTable.HasUnityEvent((int)type)) {
         action += (h) => _eventTable.Invoke((int)type);
-      }
-      else {
+      } else {
         action += (h) => { };
       }
     }

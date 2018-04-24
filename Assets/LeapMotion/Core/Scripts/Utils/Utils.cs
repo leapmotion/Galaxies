@@ -14,9 +14,11 @@ using System.IO;
 using System.Collections.Generic;
 using Leap.Unity.Query;
 
-namespace Leap.Unity {
+namespace Leap.Unity
+{
 
-  public static class Utils {
+  public static class Utils
+  {
 
     #region C# Utilities
 
@@ -654,7 +656,8 @@ namespace Leap.Unity {
       return new ChildrenEnumerator(t);
     }
 
-    public struct ChildrenEnumerator : IEnumerator<Transform> {
+    public struct ChildrenEnumerator : IEnumerator<Transform>
+    {
       private Transform _t;
       private int _idx;
       private int _count;
@@ -828,7 +831,7 @@ namespace Leap.Unity {
       return t.InverseTransformPoint(v);
     }
 
-    
+
 
     #endregion
 
@@ -953,8 +956,7 @@ namespace Leap.Unity {
         a = quat[(largest + 1) % 4];
         b = quat[(largest + 2) % 4];
         c = quat[(largest + 3) % 4];
-      }
-      else {
+      } else {
         a = -quat[(largest + 1) % 4];
         b = -quat[(largest + 2) % 4];
         c = -quat[(largest + 3) % 4];
@@ -1050,7 +1052,7 @@ namespace Leap.Unity {
 #else
       Matrix4x4 toReturn = m;
       for (int i = 0; i < 4; i++) {
-        toReturn.SetColumn(i, toReturn.GetColumn(i) * f);
+        toReturn.setColumn(i, toReturn.GetColumn(i) * f);
       }
       return toReturn;
 #endif
@@ -1087,8 +1089,7 @@ namespace Leap.Unity {
             }
           }
         }
-      }
-      finally {
+      } finally {
         firstColliders.Clear(); Pool<List<Collider>>.Recycle(firstColliders);
         secondColliders.Clear(); Pool<List<Collider>>.Recycle(secondColliders);
       }
@@ -1621,7 +1622,8 @@ namespace Leap.Unity {
       return new HorizontalLineRectEnumerator(r, numLines);
     }
 
-    public struct HorizontalLineRectEnumerator {
+    public struct HorizontalLineRectEnumerator
+    {
       Rect rect;
       int numLines;
       int index;

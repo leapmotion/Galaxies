@@ -179,6 +179,9 @@ public unsafe class GalaxySimulation : MonoBehaviour {
       }
       return t;
     }
+    set {
+      _timescale = value;
+    }
   }
 
   private int _seed = 0;

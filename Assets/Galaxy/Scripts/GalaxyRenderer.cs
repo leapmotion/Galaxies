@@ -72,7 +72,7 @@ public class GalaxyRenderer : MonoBehaviour {
   [Range(0, 1)]
   [FormerlySerializedAs("starBrightness")]
   [SerializeField, DevValue]
-  private float _starBrightness;
+  public float _starBrightness;
 
   //[Disable]
   [SerializeField]
@@ -100,7 +100,7 @@ public class GalaxyRenderer : MonoBehaviour {
 
   [Range(0, 2)]
   [SerializeField, DevValue]
-  private float _gammaValue = 0.3f;
+  public float _gammaValue = 0.3f;
 
   [SerializeField, DevValue]
   private bool _enableBoxFilter = true;
