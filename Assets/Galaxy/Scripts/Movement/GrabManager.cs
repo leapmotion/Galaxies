@@ -54,10 +54,10 @@ public class GrabManager : MonoBehaviour {
   private void Update() {
     switchLeft.grasped = false;
     switchRight.grasped = false;
-    rts.vroomVroom = false;
+    //rts.vroomVroom = false;
 
     if (left.isGrasped && right.isGrasped) {
-      rts.vroomVroom = true;
+      //rts.vroomVroom = true;
       switchLeft.grasped = true;
       switchRight.grasped = true;
       transform.position = (left.transform.position + right.transform.position) * 0.5f;
