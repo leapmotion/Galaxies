@@ -60,9 +60,9 @@ public class IESwapLogic : MonoBehaviour {
         } else {
           //Grab state and create IE
           spawned.Clear();
-          for (int i = 0; i < sim.mainState.count; i++) {
+          for (int i = 0; i < sim.mainState->numBlackHoles; i++) {
             var obj = Instantiate(grabbablePrefab);
-            obj.transform.position = (*(sim.mainState.mainState + i)).position;
+            obj.transform.position = (*(sim.mainState->blackHoles + i)).position;
             obj.transform.rotation = Quaternion.identity;
             spawned.Add(obj);
           }

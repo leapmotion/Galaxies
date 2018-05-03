@@ -89,14 +89,6 @@ public static class GalaxyUIOperations {
     return s_galaxySimulation.blackHoleCount;
   }
 
-  public static void SetMaxSimulationSpeed(float normalizedValue) {
-    s_galaxySimulation.timestepCoefficient = normalizedValue;
-  }
-
-  public static float GetMaxSimulationSpeed() {
-    return s_galaxySimulation.timestepCoefficient;
-  }
-
   #endregion
 
 }

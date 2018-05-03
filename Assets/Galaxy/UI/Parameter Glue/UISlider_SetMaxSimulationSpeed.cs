@@ -4,16 +4,38 @@ using UnityEngine;
 
 namespace Leap.Unity.GalaxySim {
 
-  public class UISlider_SetMaxSimulationSpeed : UISlider {
+  public class UISlider_SetMaxSimulationSpeed : UISlider, IPropertyMultiplier {
 
-    public override void OnSliderValue(float value) {
-      GalaxyUIOperations.SetMaxSimulationSpeed(slider.normalizedHorizontalValue);
+    public GalaxySimulation simulation;
+
+    public float multiplier {
+      get {
+        return slider.normalizedHorizontalValue;
+      }
+    }
+
+    protected override void OnEnable() {
+      base.OnEnable();
+      if (simulation == null) {
+        Debug.LogError("UISlider SetMaxSimulationSpeed requires a simulation to be connected!");
+        enabled = false;
+        return;
+      }
+
+      simulation.TimestepMultipliers.Add(this);
+    }
+
+    protected override void OnDisable() {
+      base.OnDisable();
+
+      if (simulation != null) {
+        simulation.TimestepMultipliers.Remove(this);
+      }
     }
 
     public override float GetStartingSliderValue() {
-      return GalaxyUIOperations.GetMaxSimulationSpeed();
+      return 1;
     }
-
   }
 
 }
