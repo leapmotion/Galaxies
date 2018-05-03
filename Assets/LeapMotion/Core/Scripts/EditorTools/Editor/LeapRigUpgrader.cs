@@ -43,8 +43,13 @@ namespace Leap.Unity {
       EditorSceneManager.sceneOpened -= onSceneOpened;
       EditorSceneManager.sceneOpened += onSceneOpened;
 
-      EditorApplication.hierarchyChanged -= onHierarchyWindowChanged;
-      EditorApplication.hierarchyChanged += onHierarchyWindowChanged;
+      #if UNITY_2018_1_OR_NEWER
+      EditorApplication.hierarchyChanged -= onHierarchyChanged;
+      EditorApplication.hierarchyChanged += onHierarchyChanged;
+      #else
+      EditorApplication.hierarchyWindowChanged -= onHierarchyChanged;
+      EditorApplication.hierarchyWindowChanged += onHierarchyChanged;
+      #endif
 
       _currentSceneScanStatus = SceneScanStatus.NotScanned;
     }
@@ -53,7 +58,7 @@ namespace Leap.Unity {
       _currentSceneScanStatus = SceneScanStatus.NotScanned;
       ClearScanData();
     }
-    private static void onHierarchyWindowChanged() {
+    private static void onHierarchyChanged() {
       _currentSceneScanStatus = SceneScanStatus.NotScanned;
       ClearScanData();
     }
@@ -956,7 +961,7 @@ namespace Leap.Unity {
     #region Upgrading
 
     public class UpgradeOptions {
-      public bool camera_removeEnableDepthBufferScript = true;
+      public bool camera_removeEnableDepthBufferScript = false;
       public bool camera_removeRightEyeCamera = true;
       public bool camera_removeLeapEyeDislocator = true;
       public bool leapSpace_removeMissingScripts = true;
