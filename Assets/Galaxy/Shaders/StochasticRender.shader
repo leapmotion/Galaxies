@@ -1,6 +1,5 @@
-﻿Shader "Unlit/StochasticRender" {
+﻿Shader "Galaxy/Stars/Point Bright" {
 	Properties {
-		_MainTex ("Texture", 2D) = "white" {}
     _Noise   ("Noise", 2D) = "white" {}
     _NoiseOffset("Noise Offset", Int) = 0
 	}
@@ -8,6 +7,7 @@
   CGINCLUDE
   #pragma multi_compile _ USE_RAMP
   #pragma multi_compile _ BY_SPEED BY_DIRECTION BY_ACCEL BY_BLACK_HOLE
+  #pragma multi_compile _ INTERPOLATION_CROSSES_TEX_BOUNDARY
   #include "UnityCG.cginc"
 
   struct v2f {
@@ -17,9 +17,13 @@
 
   sampler2D _Ramp;
   sampler2D _Noise;
-  sampler2D _MainTex;
+
+  sampler2D _CurrPosition;
   sampler2D _PrevPosition;
   sampler2D _LastPosition;
+
+  float _CurrInterpolation;
+  float _PrevInterpolation;
 
   float4x4 _ToWorldMat;
   float _Scale;
@@ -32,16 +36,34 @@
 
   v2f vert(uint id : SV_VertexID) {
     float4 uv;
-    uv.x = (id / 512) / 512.0;
-    uv.y = (id % 512) / 512.0;
+    uv.x = (id / 1024) / 1024.0;
+    uv.y = (id % 1024) / 1024.0;
     uv.z = 0;
     uv.w = 0;
 
-    float4 position = tex2Dlod(_MainTex, uv);
-    float4 prevPosition = tex2Dlod(_PrevPosition, uv);
-    float4 lastPosition = tex2Dlod(_LastPosition, uv);
+    float4 currTex, prevTex;
+	  float4 currPosition, prevPosition;
 
-    float4 worldPosition = mul(_ToWorldMat, float4(position.xyz, 1));
+#ifdef INTERPOLATION_CROSSES_TEX_BOUNDARY
+	{
+		currTex = tex2Dlod(_CurrPosition, uv);
+		prevTex = tex2Dlod(_PrevPosition, uv);
+		float4 lastTex = tex2Dlod(_LastPosition, uv);
+
+		currPosition = lerp(prevTex, currTex, _CurrInterpolation);
+		prevPosition = lerp(lastTex, prevTex, _PrevInterpolation);
+	}
+#else
+	{
+		currTex = tex2Dlod(_CurrPosition, uv);
+		prevTex = tex2Dlod(_PrevPosition, uv);
+
+		currPosition = lerp(prevTex, currTex, _CurrInterpolation);
+		prevPosition = lerp(prevTex, currTex, _PrevInterpolation);
+	}
+#endif
+
+    float4 worldPosition = mul(_ToWorldMat, float4(currPosition.xyz, 1));
 
     //uint id2 = (id + _NoiseOffset) % (32 * 32);
     //uv.x = (id2 / 32) / 32.0;
@@ -60,11 +82,11 @@
     o.color = _PreScalar;
 
 #if BY_SPEED
-    o.color = _PreScalar * length(prevPosition - position);
+    o.color = _PreScalar * length(prevTex - currTex);
 #endif
 
 #if BY_DIRECTION
-    float3 delta = abs(prevPosition - position);
+    float3 delta = abs(prevPosition - currPosition);
     float maxC = max(max(delta.x, delta.y), delta.z);
 
     delta /= maxC;
@@ -75,13 +97,15 @@
 #endif
 
 #if BY_ACCEL
-    float4 vel0 = position - prevPosition;
-    float4 vel1 = prevPosition - lastPosition;
-    o.color = _PreScalar * length(vel0 - vel1);
+	//TODO: accel not always there :(
+    //float4 vel0 = currPosition - prevPosition;
+    //float4 vel1 = prevPosition - lastPosition;
+    //o.color = _PreScalar * length(vel0 - vel1);
+	o.color = float4(1, 0, 0, 1);
 #endif
 
 #if BY_BLACK_HOLE
-    o.color = position.w;
+    o.color = currPosition.w;
 #endif
 
 #if USE_RAMP

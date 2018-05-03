@@ -1,9 +1,10 @@
 ﻿Shader "Unlit/PointSimShader" {
-	Properties {
-		_MainTex ("Texture", 2D) = "white" {}
+  Properties {
+    _PrevPositions ("Prev Positions", 2D) = "white" {}
+    _CurrPositions ("Curr Positions", 2D) = "white" {}
     _Noise   ("Noise", 2D) = "white" {}
     _Force   ("Force", Float) = 0.01
-	}
+  }
 
   CGINCLUDE
   #include "UnityCG.cginc"
@@ -14,10 +15,10 @@
   sampler2D_float _Noise;
   sampler2D_float _RadiusDistribution;
 
+  sampler2D_float _DragPositions;
+
   float _Force;
 
-  float _PrevTimestep;
-  float _Timestep;
   float _FuzzValue;
 
   float4x4 _PlanetRotations[100];
@@ -33,7 +34,10 @@
   float _MinDiscRadius;
   float _MaxDiscRadius;
   float _MaxDiscHeight;
-  
+
+  uint _NumDrags;
+  float _DragIds[4];
+  float4x4 _DragTransforms[4];
 
   struct appdata {
     float4 vertex : POSITION;
@@ -68,7 +72,7 @@
       accel += target.w * normalize(toTarget) / (_FuzzValue + dot(toTarget, toTarget));
     }
 
-    return float4(currPos.xyz + (currPos.xyz - prevPos.xyz) * (_Timestep / _PrevTimestep) + accel * _Timestep * _Timestep * _Force, currPos.w);
+    return float4(2 * currPos.xyz - prevPos.xyz + accel * _Force, currPos.w);
   }
 
   fragOut initDisc(v2f i) {
@@ -118,15 +122,29 @@
     float planetIndex = index / (float)_PlanetCount;
 
     fragOut o;
-    o.dest0 = float4(discPos - discVel * _Timestep, planetIndex);
+    o.dest0 = float4(discPos - discVel, planetIndex);
     o.dest1 = float4(discPos, planetIndex);
     return o;
   }
 
+  float4 applyDrag(v2f i) : SV_Target {
+	float4 pos = tex2D(_DragPositions, i.uv);
+
+	for (uint i = 0; i < _NumDrags; i++) {
+		float id = _DragIds[i];
+		float4x4 transform = _DragTransforms[i];
+		if (abs(pos.w - id) < 0.01) {
+			pos.xyz = mul(transform, float4(pos.xyz, 1));
+		}
+	}
+
+	return pos;
+  }
+
   ENDCG
 
-	SubShader {
-		Tags { "RenderType"="Opaque" }
+  SubShader {
+    Tags { "RenderType"="Opaque" }
     LOD 100
     Cull Off
     ZTest Off
@@ -134,19 +152,27 @@
     Blend One Zero
 
     //Pass 0: integrate velocities
-		Pass {
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment integratePositions
+    Pass {
+      CGPROGRAM
+      #pragma vertex vert
+      #pragma fragment integratePositions
       ENDCG
-		}
+    }
 
     //Pass 1: init galaxy states
-		Pass {
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment initDisc
+    Pass {
+      CGPROGRAM
+      #pragma vertex vert
+      #pragma fragment initDisc
       ENDCG
-		}
-	}
+    }
+
+	  //Pass 2: perform drag calculations
+    Pass {
+	    CGPROGRAM
+        #pragma vertex vert
+	      #pragma fragment applyDrag
+	    ENDCG
+	  }
+  }
 }
