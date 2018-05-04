@@ -1909,7 +1909,7 @@ MonoBehaviour:
   graphic: {fileID: 114605405128428360}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
@@ -1944,7 +1944,7 @@ MonoBehaviour:
   graphic: {fileID: 114927344282174500}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
@@ -1965,7 +1965,7 @@ MonoBehaviour:
   graphic: {fileID: 114533500156985666}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 7
@@ -2030,7 +2030,7 @@ MonoBehaviour:
   graphic: {fileID: 114119737104162154}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 4
@@ -2051,7 +2051,7 @@ MonoBehaviour:
   graphic: {fileID: 114092772023162214}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 5
@@ -2072,7 +2072,7 @@ MonoBehaviour:
   graphic: {fileID: 114464246074238984}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 7
@@ -2208,7 +2208,7 @@ MonoBehaviour:
   graphic: {fileID: 114388394158452582}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 2
@@ -2320,7 +2320,7 @@ MonoBehaviour:
   graphic: {fileID: 114454190605750250}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 4
@@ -2408,7 +2408,7 @@ MonoBehaviour:
   graphic: {fileID: 114192218530282444}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 4
@@ -2429,7 +2429,7 @@ MonoBehaviour:
   graphic: {fileID: 114624991320876816}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 4
@@ -2548,7 +2548,7 @@ MonoBehaviour:
   graphic: {fileID: 0}
   renderer: {fileID: 23767475202026196}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 6
@@ -2626,7 +2626,7 @@ MonoBehaviour:
   graphic: {fileID: 114210657282377378}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 4
@@ -2886,7 +2886,7 @@ MonoBehaviour:
   graphic: {fileID: 0}
   renderer: {fileID: 23161437376136656}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 6
@@ -2918,7 +2918,7 @@ MonoBehaviour:
   graphic: {fileID: 114814782983398516}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
@@ -2950,7 +2950,7 @@ MonoBehaviour:
   graphic: {fileID: 114781729720757424}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 7
@@ -3012,7 +3012,7 @@ MonoBehaviour:
   graphic: {fileID: 114164591788670608}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 4
@@ -3220,7 +3220,7 @@ MonoBehaviour:
   graphic: {fileID: 114316167314293232}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 7
@@ -3238,7 +3238,7 @@ MonoBehaviour:
   graphic: {fileID: 114391559707756936}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
@@ -3415,7 +3415,7 @@ MonoBehaviour:
   graphic: {fileID: 114181535051387636}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 7
@@ -3536,7 +3536,7 @@ MonoBehaviour:
   graphic: {fileID: 114825120117873170}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
@@ -3557,7 +3557,7 @@ MonoBehaviour:
   graphic: {fileID: 114357790835239276}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 7
@@ -3630,7 +3630,7 @@ MonoBehaviour:
   graphic: {fileID: 114219788758951048}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 6
@@ -3698,7 +3698,7 @@ MonoBehaviour:
   graphic: {fileID: 114837907506642480}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
@@ -3746,7 +3746,7 @@ MonoBehaviour:
   graphic: {fileID: 114092313920335086}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
@@ -3767,7 +3767,7 @@ MonoBehaviour:
   graphic: {fileID: 114050960390363814}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 7
@@ -3881,7 +3881,7 @@ MonoBehaviour:
   graphic: {fileID: 114916590664234496}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
@@ -4062,7 +4062,7 @@ MonoBehaviour:
   graphic: {fileID: 114623751435332148}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 7
@@ -4919,7 +4919,7 @@ MonoBehaviour:
   graphic: {fileID: 114697322768139134}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 4
@@ -5098,7 +5098,7 @@ MonoBehaviour:
   graphic: {fileID: 114701580759408640}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 9
@@ -5163,7 +5163,7 @@ MonoBehaviour:
   graphic: {fileID: 114202289701618544}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
@@ -5336,7 +5336,7 @@ MonoBehaviour:
   graphic: {fileID: 114105324253164428}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 4
@@ -5371,7 +5371,7 @@ MonoBehaviour:
   graphic: {fileID: 114072512766607378}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 4
@@ -5405,7 +5405,7 @@ MonoBehaviour:
   graphic: {fileID: 114039469625362678}
   renderer: {fileID: 0}
   shaderColorName: 
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
@@ -5637,7 +5637,7 @@ MonoBehaviour:
   graphic: {fileID: 114494504260400500}
   renderer: {fileID: 0}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 7
@@ -5655,7 +5655,7 @@ MonoBehaviour:
   graphic: {fileID: 0}
   renderer: {fileID: 23810924958124614}
   shaderColorName: _Color
-  palette: {fileID: 11400000, guid: 759af7f9d2224f74daea9b2575e1ff5a, type: 2}
+  palette: {fileID: 0}
   colorChangeSpeed: 20
   filter: {fileID: 0}
   restingColorIdx: 0
