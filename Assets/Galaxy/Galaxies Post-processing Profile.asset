@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
-  m_Name: New Post-processing Profile
+  m_Name: Galaxies Post-processing Profile
   m_EditorClassIdentifier: 
   settings:
   - {fileID: 114378425995564130}
@@ -52,6 +52,7 @@ MonoBehaviour:
   dirtTexture:
     overrideState: 0
     value: {fileID: 0}
+    defaultState: 1
   dirtIntensity:
     overrideState: 0
     value: 0
