@@ -337,6 +337,55 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!1 &101366259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 101366261}
+  - component: {fileID: 101366260}
+  m_Layer: 0
+  m_Name: PathControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &101366260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 101366259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc08b5b4ba9fbb4d9966ecafee6b693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  galaxyIE: {fileID: 1489295043}
+  galaxySim: {fileID: 1245413931}
+  galaxyRenderer: {fileID: 87496864}
+  pathControlEnabled:
+    trailColor: {r: 0.77205884, g: 0.9622718, b: 1, a: 1}
+    starBrightness: 0.3
+  pathControlDisabled:
+    trailColor: {r: 0.1420311, g: 0.19852942, b: 0.13137977, a: 1}
+    starBrightness: 1
+--- !u!4 &101366261
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 101366259}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.547828, y: -2.7598028, z: 2.4764745}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &116223185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1425,65 +1474,6 @@ Transform:
   m_Father: {fileID: 1940216656}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &977765818
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 977765819}
-  - component: {fileID: 977765820}
-  m_Layer: 0
-  m_Name: SpaceVsPathController (Drives Interaction Mode)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &977765819
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 977765818}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1280041021}
-  - {fileID: 1400861989}
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &977765820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 977765818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 425b98346095419408b896a029f4b66a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftHandRenderer: {fileID: 1613247934}
-  rightHandRenderer: {fileID: 2036332166}
-  galaxySim: {fileID: 1245413931}
-  galaxyRenderer: {fileID: 87496864}
-  spaceBehaviour: {fileID: 1441537859}
-  galaxyIE: {fileID: 1489295043}
-  solarIE: {fileID: 0}
-  pathSettings:
-    leftMaterial: {fileID: 2100000, guid: 166ecde2831eccd4b992d6bd0b12faa6, type: 2}
-    rightMaterial: {fileID: 2100000, guid: 90443e8b41e174c4ba85fde053bab9a5, type: 2}
-    trailColor: {r: 0.77205884, g: 0.9622718, b: 1, a: 1}
-    starBrightness: 0.3
-  spaceSettings:
-    leftMaterial: {fileID: 2100000, guid: 76c9094b806cbf84a9927b314b832a54, type: 2}
-    rightMaterial: {fileID: 2100000, guid: 467367e1e533dfd46b39158ee9fc98cd, type: 2}
-    trailColor: {r: 0.1420311, g: 0.19852942, b: 0.13137977, a: 1}
-    starBrightness: 1
 --- !u!1 &1012015448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2261,6 +2251,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1213777160}
+  - component: {fileID: 1213777161}
   m_Layer: 0
   m_Name: Mode4
   m_TagString: Untagged
@@ -2284,6 +2275,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1213777161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1213777159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7010b56eb14faf042b9467e2c8da7759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rts: {fileID: 753507341}
+  _switchA: {fileID: 414461053}
+  _switchB: {fileID: 1326112675}
 --- !u!1 &1231026809
 GameObject:
   m_ObjectHideFlags: 0
@@ -2426,72 +2431,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1280041019
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1280041021}
-  - component: {fileID: 1280041020}
-  m_Layer: 0
-  m_Name: LeftTap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1280041020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1280041019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b437f02f1e2805f4f9cdb74a71b6ad14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _eventTable:
-    _entries:
-    - enumValue: 100
-      callback:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 977765820}
-            m_MethodName: ToggleMode
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-  tappedHand: 0
-  targetSide: 1
-  areaRadius: 0.05
-  areaHeight: 0.04
-  palmNormalTolerance: 45
-  radialAngleTolerance: 90
-  hysteresis: 0.01
---- !u!4 &1280041021
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1280041019}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 977765819}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1284217359
 GameObject:
@@ -2680,72 +2619,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1357969263}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1400861987
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1400861989}
-  - component: {fileID: 1400861988}
-  m_Layer: 0
-  m_Name: RightTap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1400861988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1400861987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b437f02f1e2805f4f9cdb74a71b6ad14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _eventTable:
-    _entries:
-    - enumValue: 100
-      callback:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 977765820}
-            m_MethodName: ToggleMode
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-  tappedHand: 1
-  targetSide: 1
-  areaRadius: 0.05
-  areaHeight: 0.04
-  palmNormalTolerance: 45
-  radialAngleTolerance: 90
-  hysteresis: 0.01
---- !u!4 &1400861989
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1400861987}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 977765819}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1408525950
 GameObject:
   m_ObjectHideFlags: 0
@@ -3018,11 +2891,6 @@ MonoBehaviour:
   _contactBoneLayer:
     layerIndex: 14
   _drawControllerRuntimeGizmos: 0
---- !u!137 &1613247934 stripped
-SkinnedMeshRenderer:
-  m_PrefabParentObject: {fileID: 137091762490896592, guid: 2aa010a1e75292e49a24f3f71bb9cddb,
-    type: 2}
-  m_PrefabInternal: {fileID: 1707359423}
 --- !u!1 &1637457344
 GameObject:
   m_ObjectHideFlags: 0
@@ -3196,7 +3064,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1698574329
 GameObject:
@@ -3241,7 +3109,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1707359423
 Prefab:
@@ -4261,6 +4129,50 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1786236360}
   m_Mesh: {fileID: 4300000, guid: e91aab3111b2573409ef3d8c851ec187, type: 3}
+--- !u!1 &1787541249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1787541251}
+  - component: {fileID: 1787541250}
+  m_Layer: 0
+  m_Name: SimInterop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1787541250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1787541249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc430e7a775ae1a43adbd4059cb9e242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sim: {fileID: 1245413931}
+  _renderer: {fileID: 87496864}
+  _trsPinchAnchor: {fileID: 1213777159}
+  _moveGalaxiesAnchor: {fileID: 101366259}
+--- !u!4 &1787541251
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1787541249}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.547828, y: -2.7598028, z: 2.4764745}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1940216655
 GameObject:
   m_ObjectHideFlags: 0
@@ -4318,11 +4230,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &2036332166 stripped
-SkinnedMeshRenderer:
-  m_PrefabParentObject: {fileID: 137723638835135990, guid: 2276723046d707c4f94d431ceb80ab92,
-    type: 2}
-  m_PrefabInternal: {fileID: 1195132547}
 --- !u!1 &2074829958
 GameObject:
   m_ObjectHideFlags: 0
