@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 [CreateAssetMenu(order = 900)]
 public class RenderPreset : ScriptableObject {
@@ -13,8 +14,7 @@ public class RenderPreset : ScriptableObject {
   public float postScalar = 1;
 
   [Header("Post Processing")]
-  public PostProcessMode postProcessMode;
-  public Gradient heatGradient;
+  public PostProcessProfile profile;
 
   public enum BlitMode {
     Solid,
@@ -30,7 +30,6 @@ public class RenderPreset : ScriptableObject {
   }
 
   private Texture2D _starTex;
-  private Texture2D _heatTex;
 
   public Texture2D starTex {
     get {
@@ -41,18 +40,8 @@ public class RenderPreset : ScriptableObject {
     }
   }
 
-  public Texture2D heatTex {
-    get {
-      if (_heatTex == null) {
-        _heatTex = heatGradient.ToTexture();
-      }
-      return _heatTex;
-    }
-  }
-
   void OnValidate() {
     _starTex = starRamp.ToTexture();
-    _heatTex = heatGradient.ToTexture();
   }
 }
 

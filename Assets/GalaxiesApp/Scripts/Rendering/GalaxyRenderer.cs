@@ -6,6 +6,7 @@ using Leap.Unity;
 using Leap.Unity.DevGui;
 using Leap.Unity.Attributes;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 using Leap.Unity.Animation;
 
 [RequireComponent(typeof(Camera))]
@@ -94,6 +95,8 @@ public class GalaxyRenderer : MonoBehaviour {
   [SerializeField]
   private Material _lightMat;
 
+  [SerializeField]
+  private PostProcessVolume _heatmapVolume;
 
   [Header("Render Presets")]
   [SerializeField]
@@ -370,7 +373,13 @@ public class GalaxyRenderer : MonoBehaviour {
   }
 
   private void uploadGradientTextures() {
-    _postProcessMat.SetTexture(GRADIENT_PROPERTY, preset.heatTex);
+    if (preset.profile == null) {
+      _heatmapVolume.weight = 0;
+      _heatmapVolume.profile = null;
+    } else {
+      _heatmapVolume.weight = 1;
+      _heatmapVolume.profile = preset.profile;
+    }
 
     var starTex = preset.starTex;
     _pointMat.SetTexture("_Ramp", starTex);
