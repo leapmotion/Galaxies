@@ -86,7 +86,7 @@
 #endif
 
 #if BY_DIRECTION
-    float3 delta = abs(prevPosition - currPosition);
+    float3 delta = abs(prevTex - currTex);
     float maxC = max(max(delta.x, delta.y), delta.z);
 
     delta /= maxC;

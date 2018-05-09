@@ -30,6 +30,7 @@ namespace Leap.Unity.Galaxies {
       }
 
       _baseMult = new BaseMultiplier();
+      _baseMult.multiplier = 1;
       _sim.TimestepMultipliers.Add(_baseMult);
     }
 
