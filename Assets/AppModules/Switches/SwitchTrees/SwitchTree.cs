@@ -274,6 +274,10 @@ namespace Leap.Unity.Animation {
     private bool _treeReady;
 
     public SwitchTree(Transform transform, string startingActiveNode = null) {
+      Initialize(transform, startingActiveNode);
+    }
+
+    public void Initialize(Transform transform, string startingActiveNode = null) {
       var objSwitch = transform.GetComponent<IPropertySwitch>();
       if (objSwitch == null) {
         throw new System.InvalidOperationException("Cannot build a Switch Tree for "
@@ -317,7 +321,9 @@ namespace Leap.Unity.Animation {
     /// Traverses the tree, deactivating all switch pathways that do not lead to the
     /// switch node identified by this nodeName, then activating all switches along the
     /// path to the switch node identified by this nodeName, but no deeper. Switches that
-    /// are children of the named node are also deactivated.
+    /// are children of the named node are also deactivated, but they may be reactivated
+    /// if the activation of a parent results in the activation of its children as a
+    /// side-effect.
     /// 
     /// Returns true if the node identified by nodeName was found, false otherwise.
     /// </summary>
@@ -434,7 +440,7 @@ namespace Leap.Unity.Animation {
             // their normal switching functionality. However, when the tree desires to
             // switch to a specific node beneath one of these nodes, this behavior should
             // be overridden.
-            // To do this, we need to deactivate all OTHER children when we still have a\
+            // To do this, we need to deactivate all OTHER children when we still have a
             // child node to activate, just after activating any node.
             if (activeNodeChain.Count > 0) {
               var childToActivate = activeNodeChain.Pop();
@@ -469,19 +475,6 @@ namespace Leap.Unity.Animation {
         activeNodeChain.Clear();
         Pool<Stack<Node>>.Recycle(activeNodeChain);
       }
-    }
-
-    /// <summary>
-    /// If the specified state node is not active, the switch tree will switch to that
-    /// node. If switch tree will switch to that node's parent, deactivating the
-    /// specified node. (Calling this method will also deactivate any sibling nodes that
-    /// might have been activated out of the context of the SwitchTree.)
-    /// 
-    /// Returns true if the node identified by nodeName was found in the tree,
-    /// false otherwise.
-    /// </summary>
-    public bool ToggleState(string nodeName, bool immediately = false) {
-      return SwitchTo(nodeName, immediately, toggle: true);
     }
 
     /// <summary>
@@ -522,6 +515,19 @@ namespace Leap.Unity.Animation {
       else {
         node.objSwitch.OffNow();
       }
+    }
+
+    /// <summary>
+    /// If the specified state node is not active, the switch tree will switch to that
+    /// node. If switch tree will switch to that node's parent, deactivating the
+    /// specified node. (Calling this method will also deactivate any sibling nodes that
+    /// might have been activated out of the context of the SwitchTree.)
+    /// 
+    /// Returns true if the node identified by nodeName was found in the tree,
+    /// false otherwise.
+    /// </summary>
+    public bool ToggleState(string nodeName, bool immediately = false) {
+      return SwitchTo(nodeName, immediately, toggle: true);
     }
 
     /// <summary>

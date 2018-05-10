@@ -16,27 +16,35 @@ namespace Leap.Unity.Animation {
     protected override void Reset() {
       base.Reset();
 
-      initialize();
+      refreshTree();
     }
 
     protected override void OnValidate() {
       base.OnValidate();
 
-      initialize();
+      #if UNITY_EDITOR
+      UnityEditor.EditorApplication.delayCall += () => {
+        if (this != null) {
+          refreshTree();
+        }
+      };
+      #endif
     }
 
     protected override void Start() {
       base.Start();
 
-      initialize();
-    }
-
-    private void initialize() {
       refreshTree();
     }
 
     private void refreshTree() {
-      tree = new SwitchTree(this.transform, tree == null ? null : tree.curActiveNodeName);
+      if (tree == null) {
+        tree = new SwitchTree(this.transform, null);
+      }
+      else {
+        var curActiveNodeName = tree.curActiveNodeName;
+        tree.Initialize(this.transform, curActiveNodeName);
+      }
     }
 
     #endregion
@@ -54,9 +62,9 @@ namespace Leap.Unity.Animation {
     /// are children of the named node are also deactivated.
     /// </summary>
     public void SwitchTo(string nodeName) {
-#if UNITY_EDITOR
+      #if UNITY_EDITOR
       UnityEditor.Undo.RecordObject(this, "Set SwitchTreeController State");
-#endif
+      #endif
       tree.SwitchTo(nodeName);
     }
     public void SwitchTo(string nodeName, bool immediately = false) {

@@ -1,6 +1,4 @@
 ﻿using Leap.Unity.Query;
-using Leap.Unity.Attributes;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;

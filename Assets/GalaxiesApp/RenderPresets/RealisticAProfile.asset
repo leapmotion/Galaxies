@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
-  m_Name: HeatmapTestProfile
+  m_Name: RealisticAProfile
   m_EditorClassIdentifier: 
   settings:
   - {fileID: 114872734427216506}
@@ -33,5 +33,5 @@ MonoBehaviour:
     value: 1
   gradient:
     overrideState: 1
-    value: {fileID: 28705949539735584, guid: af3915adfb0791f469fbaba5000d1657, type: 2}
+    value: {fileID: 28009706499411234, guid: 5dd72a0a7b6cf28408135829537d2223, type: 2}
     defaultState: 1
