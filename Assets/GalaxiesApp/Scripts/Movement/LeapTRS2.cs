@@ -1,5 +1,6 @@
 ﻿using Leap.Unity;
 using Leap.Unity.Attributes;
+using Leap.Unity.Gestures;
 using Leap.Unity.Infix;
 using Leap.Unity.RuntimeGizmos;
 using UnityEngine;
@@ -14,15 +15,18 @@ public class LeapTRS2 : MonoBehaviour, IRuntimeGizmoComponent {
 
   public Transform objectTransform;
 
-  [Header("Grab Switches")]
+  [Header("Grab Switches OR Pinch Gestures (pinch gestures override)")]
 
-  [SerializeField]
-  private GrabSwitch _switchA;
-  public GrabSwitch switchA { get {  return _switchA; } }
+  //[SerializeField]
+  //private GrabSwitch _switchA;
+  //public GrabSwitch switchA { get {  return _switchA; } }
 
-  [SerializeField]
-  private  GrabSwitch _switchB;
-  public GrabSwitch switchB { get { return _switchB; } }
+  //[SerializeField]
+  //private GrabSwitch _switchB;
+  //public GrabSwitch switchB { get { return _switchB; } }
+
+  public PinchGesture pinchGestureA;
+  public PinchGesture pinchGestureB;
 
   [Header("Scale")]
 
@@ -124,10 +128,16 @@ public class LeapTRS2 : MonoBehaviour, IRuntimeGizmoComponent {
   private RingBuffer<Pose> _bPoses = new RingBuffer<Pose>(2);
 
   private void updateTRS() {
-    
+
     // Get basic grab switch state information.
-    var aGrasped = _switchA != null && _switchA.grasped;
-    var bGrasped = _switchB != null && _switchB.grasped;
+    //var aGrasped = _switchA != null && _switchA.grasped;
+    //var bGrasped = _switchB != null && _switchB.grasped;
+    var aGrasped = pinchGestureA != null && pinchGestureA.isActive;
+    var bGrasped = pinchGestureB != null && pinchGestureB.isActive;
+    var aPose = Pose.identity;
+    if (aGrasped) aPose = pinchGestureA.pose;
+    var bPose = Pose.identity;
+    if (bGrasped) bPose = pinchGestureB.pose;
 
     int numGrasping = (aGrasped? 1 : 0) + (bGrasped ? 1 : 0);
 
@@ -135,14 +145,14 @@ public class LeapTRS2 : MonoBehaviour, IRuntimeGizmoComponent {
       _aPoses.Clear();
     }
     else {
-      _aPoses.Add(_switchA.pose);
+      _aPoses.Add(aPose);
     }
 
     if (!bGrasped) {
       _bPoses.Clear();
     }
     else {
-      _bPoses.Add(_switchB.pose);
+      _bPoses.Add(bPose);
     }
 
     // Declare information for applying the TRS.
@@ -322,6 +332,14 @@ public class LeapTRS2 : MonoBehaviour, IRuntimeGizmoComponent {
                                    .Then(poleRotation)
                                    .Then(poleTwist)
                                    .From(objectTransform.rotation);
+
+    var finalRot = poleTwist * poleRotation * objectTransform.rotation;
+    finalRotDelta = Quaternion.Inverse(objectTransform.rotation) * finalRot;
+
+    // objectTransform.rotation = objectTransform.rotation * finalRotDelta;
+    // objectTransform.rotation = objectTransform.rotation.Then(finalRotDelta);
+
+
 
     // Apply scale and rotation, or use momentum for these properties.
     if (_allowMomentum && applyRotateScaleMomentum) {

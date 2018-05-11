@@ -6,7 +6,7 @@ namespace Leap.Unity.Galaxies {
   public class GalaxiesUISimInterop : MonoBehaviour {
 
     [SerializeField]
-    private GalaxySimulation _simulation;
+    private GalaxySimulation _sim;
 
     [SerializeField]
     private GalaxyRenderer _renderer;
@@ -25,8 +25,8 @@ namespace Leap.Unity.Galaxies {
     private BaseMultiplier _baseMult;
 
     private void OnEnable() {
-      if (_simulation == null) {
-        _simulation = FindObjectOfType<GalaxySimulation>();
+      if (_sim == null) {
+        _sim = FindObjectOfType<GalaxySimulation>();
       }
 
       if (_renderer == null) {
@@ -35,11 +35,11 @@ namespace Leap.Unity.Galaxies {
 
       _baseMult = new BaseMultiplier();
       _baseMult.multiplier = 1;
-      _simulation.TimestepMultipliers.Add(_baseMult);
+      _sim.TimestepMultipliers.Add(_baseMult);
     }
 
     private void OnDisable() {
-      _simulation.TimestepMultipliers.Remove(_baseMult);
+      _sim.TimestepMultipliers.Remove(_baseMult);
     }
 
     public int GetGalaxyCount() {
@@ -59,7 +59,7 @@ namespace Leap.Unity.Galaxies {
     }
 
     public void RestartGalaxySimulation() {
-      _simulation.ResetSimulation();
+      _sim.ResetSimulation();
     }
 
     // "Start" and "Stop" buttons were requested, but I am thinking this would just be
