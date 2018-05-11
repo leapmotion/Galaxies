@@ -5253,7 +5253,7 @@ MonoBehaviour:
   _interactionNoContactLayer:
     layerIndex: 12
   _contactBoneLayer:
-    layerIndex: 14
+    layerIndex: 15
   _drawControllerRuntimeGizmos: 0
 --- !u!1 &1637457344
 GameObject:
@@ -6162,7 +6162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc430e7a775ae1a43adbd4059cb9e242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sim: {fileID: 1245413931}
+  _simulation: {fileID: 0}
   _renderer: {fileID: 87496864}
   _trsPinchAnchor: {fileID: 1213777159}
   _moveGalaxiesAnchor: {fileID: 101366259}

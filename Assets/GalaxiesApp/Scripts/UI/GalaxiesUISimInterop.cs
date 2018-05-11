@@ -6,7 +6,7 @@ namespace Leap.Unity.Galaxies {
   public class GalaxiesUISimInterop : MonoBehaviour {
 
     [SerializeField]
-    private GalaxySimulation _sim;
+    private GalaxySimulation _simulation;
 
     [SerializeField]
     private GalaxyRenderer _renderer;
@@ -18,11 +18,15 @@ namespace Leap.Unity.Galaxies {
     private GameObject _moveGalaxiesAnchor;
 
     private GameObject _currActiveAnchor;
+
+    private class BaseMultiplier : IPropertyMultiplier {
+      public float multiplier { get; set; }
+    }
     private BaseMultiplier _baseMult;
 
     private void OnEnable() {
-      if (_sim == null) {
-        _sim = FindObjectOfType<GalaxySimulation>();
+      if (_simulation == null) {
+        _simulation = FindObjectOfType<GalaxySimulation>();
       }
 
       if (_renderer == null) {
@@ -31,11 +35,11 @@ namespace Leap.Unity.Galaxies {
 
       _baseMult = new BaseMultiplier();
       _baseMult.multiplier = 1;
-      _sim.TimestepMultipliers.Add(_baseMult);
+      _simulation.TimestepMultipliers.Add(_baseMult);
     }
 
     private void OnDisable() {
-      _sim.TimestepMultipliers.Remove(_baseMult);
+      _simulation.TimestepMultipliers.Remove(_baseMult);
     }
 
     public int GetGalaxyCount() {
@@ -55,7 +59,7 @@ namespace Leap.Unity.Galaxies {
     }
 
     public void RestartGalaxySimulation() {
-      _sim.ResetSimulation();
+      _simulation.ResetSimulation();
     }
 
     // "Start" and "Stop" buttons were requested, but I am thinking this would just be
@@ -67,23 +71,11 @@ namespace Leap.Unity.Galaxies {
     public void SetSimulationSpeed(float normalizedSpeed) {
       _baseMult.multiplier = normalizedSpeed;
     }
-
-    public enum MuhPlaceholderEnum { PleaseReplaceMeWithAGoodEnum };
-
-    /// <summary>
-    /// Not sure what the appropriate input type is -- an enum probably, right?
-    /// 
-    /// (Don't remember if we have a different way of specifying render modes)
-    /// </summary>
+    
     public void SetRenderMode(RenderPreset preset) {
       _renderer.SetPreset(preset);
     }
-
-    /// <summary>
-    /// { TRS, Interactive }
-    /// Would be nice to have this to try a different control mechanism for the mode,
-    /// but okay if it isn't convenient to decouple this from the gesture.
-    /// </summary>
+    
     public void SetInteractionMode(InteractionMode interactionMode) {
       if (_currActiveAnchor != null) {
         _currActiveAnchor.SetActive(false);
@@ -106,38 +98,6 @@ namespace Leap.Unity.Galaxies {
       MoveGalaxies = 10
     }
 
-    private class BaseMultiplier : IPropertyMultiplier {
-      public float multiplier { get; set; }
-    }
-
-    [Serializable]
-    public class SwitchGroup {
-      [SerializeField]
-      private GameObject _anchor;
-
-      [SerializeField]
-      private GrabSwitch _a, _b;
-
-      public void Enable(LeapRTS rts) {
-        if (_anchor != null) {
-          _anchor.SetActive(true);
-        }
-
-        if (_a != null) {
-          rts._switchA = _a;
-        }
-
-        if (_b != null) {
-          rts._switchB = _b;
-        }
-      }
-
-      public void Disable() {
-        if (_anchor != null) {
-          _anchor.SetActive(false);
-        }
-      }
-    }
   }
 
 }
