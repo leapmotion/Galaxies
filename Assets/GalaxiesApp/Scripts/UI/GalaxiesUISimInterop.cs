@@ -39,11 +39,11 @@ namespace Leap.Unity.Galaxies {
     }
 
     public int GetGalaxyCount() {
-      throw new System.NotImplementedException();
+      return _sim.blackHoleCount;
     }
 
     public void SetGalaxyCount(int count) {
-      throw new System.NotImplementedException();
+      _sim.blackHoleCount = count;
     }
 
     public int GetMinGalaxyCount() {
