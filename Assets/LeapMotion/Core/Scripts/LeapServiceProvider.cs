@@ -246,11 +246,41 @@ namespace Leap.Unity {
       _transformedFixedFrame = new Frame();
       _untransformedUpdateFrame = new Frame();
       _untransformedFixedFrame = new Frame();
+
+      // TODO: DELETEME!!
+      _leapController.LogMessage += debugLogMessage;
     }
+
+    private void debugLogMessage(object sender, LogEventArgs eventArgs) {
+      if (eventArgs.severity == MessageSeverity.MESSAGE_CRITICAL) {
+        Debug.LogError(eventArgs.message);
+      }
+      else {
+        Debug.Log(eventArgs.message);
+      }
+    }
+
+    private float _timeSinceServiceConnectionChecked = 0f;
 
     protected virtual void Update() {
       if (_workerThreadProfiling) {
         LeapProfiling.Update();
+      }
+
+      if (_leapController.IsServiceConnected) {
+        _timeSinceServiceConnectionChecked = 0f;
+      }
+      else {
+        _timeSinceServiceConnectionChecked += Time.deltaTime;
+
+        if (_timeSinceServiceConnectionChecked > 2f) {
+          _timeSinceServiceConnectionChecked = 0f;
+          
+          destroyController();
+          createController();
+          Debug.LogError("Tried destroying and recreating the controller!!", this);
+          UnityEditor.EditorApplication.isPaused = true;
+        }
       }
 
 #if UNITY_EDITOR
