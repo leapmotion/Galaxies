@@ -23,10 +23,8 @@
 /Temp
 ExportedObj/
 Temp/
-Build/*
-build/*
-Builds/*
-builds/*
+[Bb]uild/
+[Bb]uilds/
 
 .vs/
 .vscode/
