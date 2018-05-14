@@ -246,9 +246,6 @@ namespace Leap.Unity {
       _transformedFixedFrame = new Frame();
       _untransformedUpdateFrame = new Frame();
       _untransformedFixedFrame = new Frame();
-
-      // TODO: DELETEME!!
-      _leapController.LogMessage += debugLogMessage;
     }
 
     private void debugLogMessage(object sender, LogEventArgs eventArgs) {

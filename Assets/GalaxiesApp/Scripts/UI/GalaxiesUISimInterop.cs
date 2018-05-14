@@ -71,6 +71,10 @@ namespace Leap.Unity.Galaxies {
     public void SetSimulationSpeed(float normalizedSpeed) {
       _baseMult.multiplier = normalizedSpeed;
     }
+
+    public float GetSimulationSpeed() {
+      return _baseMult.multiplier;
+    }
     
     public void SetRenderMode(RenderPreset preset) {
       _renderer.SetPreset(preset);

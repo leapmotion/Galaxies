@@ -62,8 +62,9 @@ public class GalaxyRenderer : MonoBehaviour {
   private Material _blackHoleMat;
 
   [Header("Star Rendering"), DevCategory]
-  [SerializeField, DevValue]
-  private bool _renderStars = true;
+  // This value is never used -Nick, 5/14
+  //[SerializeField, DevValue]
+  //private bool _renderStars = true;
 
   [Range(0, 0.05f)]
   [FormerlySerializedAs("starSize")]

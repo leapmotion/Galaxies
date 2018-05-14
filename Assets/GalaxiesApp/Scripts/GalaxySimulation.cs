@@ -36,7 +36,7 @@ public unsafe class GalaxySimulation : MonoBehaviour {
   [DevValue]
   public bool loop = false;
 
-  [Range(0, 10)]
+  [Range(0, 30)]
   [DevValue]
   public float loopTime = 10;
 
