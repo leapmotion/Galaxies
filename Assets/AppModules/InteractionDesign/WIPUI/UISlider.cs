@@ -1,16 +1,11 @@
 ﻿using Leap.Unity.Interaction;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class UISlider : UIButton {
 
-  [Header("Slider")]
+  [Header("UI Slider")]
 
   public InteractionSlider slider;
-
-  private Action<float> onSliderValue;
 
   protected override void initialize() {
     base.initialize();
@@ -22,37 +17,112 @@ public abstract class UISlider : UIButton {
     if (slider != null) {
       button = slider;
     }
+  }
 
-    onSliderValue = OnSliderValue;
+  public float value {
+    get {
+      return slider.HorizontalSliderValue;
+    }
+    set {
+      slider.HorizontalSliderValue = value;
+      slider.HorizontalSliderValue = filterSliderValue(slider.HorizontalSliderValue);
+      onSlideEvent(slider.HorizontalSliderValue);
+    }
   }
 
   protected override void OnEnable() {
     base.OnEnable();
 
-    if (slider != null) {
-      //slider.VerticalSlideEvent -= OnSliderValue;
-      //slider.VerticalSlideEvent += OnSliderValue;
+    slider.HorizontalSlideEvent -= onSlideEvent;
+    slider.HorizontalSlideEvent += onSlideEvent;
 
-      slider.HorizontalSlideEvent -= onSliderValue;
-      slider.HorizontalSlideEvent += onSliderValue;
-    }
+    slider.OnUnpress -= onUnpress;
+    slider.OnUnpress += onUnpress;
+
+    slider.OnContactEnd -= onContactEnd;
+    slider.OnContactEnd += onContactEnd;
   }
 
   protected override void OnDisable() {
     base.OnDisable();
 
     if (slider != null) {
-      slider.HorizontalSlideEvent -= onSliderValue;
+      slider.HorizontalSlideEvent -= onSlideEvent;
+      slider.OnUnpress -= onUnpress;
+      slider.OnContactEnd -= onContactEnd;
     }
   }
 
-  protected virtual void Start() {
-    slider.defaultHorizontalValue = GetStartingSliderValue();
-    slider.HorizontalSliderValue  = slider.defaultHorizontalValue;
+  private bool _firstUpdate = true;
+  protected virtual void Update() {
+    if (_firstUpdate) {
+      refreshSimValue();
+
+      _firstUpdate = false;
+    }
+
+    if (_timeSinceLastContactEnd <= _contactEndWait) {
+      _timeSinceLastContactEnd += Time.deltaTime;
+
+      if (_timeSinceLastContactEnd > _contactEndWait) {
+        SetModelValue(value);
+      }
+    }
+    else {
+      refreshSimValue();
+    }
   }
 
-  public virtual void OnSliderValue(float value) { }
+  private float _timeSinceLastContactEnd = 100f;
+  private float _contactEndWait = 0.5f;
+  /// <summary>
+  /// Sliders send contact end pretty often because the collision checks are imperfect--
+  /// arguably this is a bug in the Interaction Engine, as a workaround for now we wait
+  /// for contact end callbacks to stop happening for half a second before assuming 
+  /// contact has "truly" ended, and then we update the simulation with the slider's
+  /// value.
+  /// </summary>
+  private void onContactEnd() {
+    _timeSinceLastContactEnd = 0f;
+  }
 
-  public abstract float GetStartingSliderValue();
+  private void onSlideEvent(float value) {
+    value = filterSliderValue(value);
+  }
+
+  private void onUnpress() {
+    SetModelValue(value);
+  }
+
+  /// <summary>
+  /// Called whenever the user manipulates the slider via script or controller; use this
+  /// to enforce constraints e.g. slider value snapping or integer rounding.
+  /// </summary>
+  protected virtual float filterSliderValue(float sliderValue) {
+    return sliderValue;
+  }
+
+  /// <summary>
+  /// Sets the data model value this slider controls with the argument value, which
+  /// reflects the current value of this slider.
+  /// </summary>
+  protected abstract void SetModelValue(float sliderValue);
+
+  /// <summary>
+  /// Returns the current value at the data model -- not the value of this slider. This
+  /// is used e.g. to initialize the slider to match the system value it will manipulate.
+  /// </summary>
+  protected abstract float GetModelValue();
+
+  /// <summary>
+  /// Moves this slider to match the data model's current value.
+  /// </summary>
+  private void refreshSimValue() {
+    float sliderValue = slider.HorizontalSliderValue;
+    float simValue = GetModelValue();
+    if (sliderValue != simValue) {
+      slider.HorizontalSliderValue = simValue;
+    }
+  }
 
 }

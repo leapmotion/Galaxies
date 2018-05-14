@@ -1,8 +1,4 @@
-﻿using Leap.Unity.Interaction;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class UISliderInt : UISlider {
 
@@ -20,10 +16,8 @@ public abstract class UISliderInt : UISlider {
 
   public abstract int GetMaxValue();
 
-  public virtual void OnSliderValue(int value) { }
-
-  public sealed override void OnSliderValue(float value) {
-    OnSliderValue(Mathf.RoundToInt(value));
+  protected override float filterSliderValue(float sliderValue) {
+    return Mathf.RoundToInt(sliderValue);
   }
 
 }

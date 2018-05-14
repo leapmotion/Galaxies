@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Leap.Unity.GalaxySim {
+namespace Leap.Unity.Galaxies {
 
-  public class UISlider_SetMaxSimulationSpeed : UISlider, IPropertyMultiplier {
+  public class UISlider_SetMaxSimulationSpeed : UISliderForGalaxySim, IPropertyMultiplier {
 
     public GalaxySimulation simulation;
 
@@ -17,7 +17,8 @@ namespace Leap.Unity.GalaxySim {
     protected override void OnEnable() {
       base.OnEnable();
       if (simulation == null) {
-        Debug.LogError("UISlider SetMaxSimulationSpeed requires a simulation to be connected!");
+        Debug.LogError("UISlider SetMaxSimulationSpeed requires a simulation to be " +
+                       "connected!");
         enabled = false;
         return;
       }
@@ -33,8 +34,12 @@ namespace Leap.Unity.GalaxySim {
       }
     }
 
-    public override float GetStartingSliderValue() {
-      return 1;
+    protected override void SetModelValue(float sliderValue) {
+      galaxySimInterop.SetSimulationSpeed(sliderValue);
+    }
+
+    protected override float GetModelValue() {
+      return galaxySimInterop.GetSimulationSpeed();
     }
   }
 

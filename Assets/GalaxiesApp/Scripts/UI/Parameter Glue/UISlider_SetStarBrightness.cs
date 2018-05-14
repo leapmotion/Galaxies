@@ -1,17 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿namespace Leap.Unity.Galaxies {
 
-public class UISlider_SetStarBrightness : UISlider {
+  public class UISlider_SetStarBrightness : UISlider {
 
-  public override float GetStartingSliderValue() {
-    return GalaxyUIOperations.GetStarBrightness();
+    protected override float GetModelValue() {
+      return GalaxyUIOperations.GetStarBrightness();
+    }
+
+    protected override void SetModelValue(float sliderValue) {
+      GalaxyUIOperations.SetStarBrightness(slider.normalizedHorizontalValue);
+    }
   }
-
-  public override void OnSliderValue(float value) {
-    GalaxyUIOperations.SetStarBrightness(slider.normalizedHorizontalValue);
-  }
-
-
 
 }

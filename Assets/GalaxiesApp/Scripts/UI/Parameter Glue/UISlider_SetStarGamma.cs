@@ -1,15 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿public class UISlider_SetStarGamma : UISlider {
 
-public class UISlider_SetStarGamma : UISlider {
-
-  public override float GetStartingSliderValue() {
+  protected override float GetModelValue() {
     return GalaxyUIOperations.GetStarGamma();
   }
 
-  public override void OnSliderValue(float value) {
+  protected override void SetModelValue(float sliderValue) {
     GalaxyUIOperations.SetStarGamma(slider.normalizedHorizontalValue);
   }
-
 }
