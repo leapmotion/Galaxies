@@ -37,6 +37,18 @@ namespace Leap.Unity {
     /// </summary>
     protected const string HAND_ARRAY_GLOBAL_NAME = "_LeapHandTransforms";
 
+    /// <summary>
+    /// The maximum number of times the provider will 
+    /// attempt to reconnect to the service before giving up.
+    /// </summary>
+    protected const int MAX_RECONNECTION_ATTEMPTS = 10;
+
+    /// <summary>
+    /// The number of seconds to wait between each
+    /// reconnection attempt.
+    /// </summary>
+    protected const float RECONNECTION_INTERVAL = 3f;
+
     #endregion
 
     #region Inspector
@@ -248,37 +260,12 @@ namespace Leap.Unity {
       _untransformedFixedFrame = new Frame();
     }
 
-    private void debugLogMessage(object sender, LogEventArgs eventArgs) {
-      if (eventArgs.severity == MessageSeverity.MESSAGE_CRITICAL) {
-        Debug.LogError(eventArgs.message);
-      }
-      else {
-        Debug.Log(eventArgs.message);
-      }
-    }
-
-    private float _timeSinceServiceConnectionChecked = 0f;
-
     protected virtual void Update() {
       if (_workerThreadProfiling) {
         LeapProfiling.Update();
       }
 
-      if (_leapController.IsServiceConnected) {
-        _timeSinceServiceConnectionChecked = 0f;
-      }
-      else {
-        _timeSinceServiceConnectionChecked += Time.deltaTime;
-
-        if (_timeSinceServiceConnectionChecked > 2f) {
-          _timeSinceServiceConnectionChecked = 0f;
-          
-          destroyController();
-          createController();
-          Debug.LogError("Tried destroying and recreating the controller!!", this);
-          UnityEditor.EditorApplication.isPaused = true;
-        }
-      }
+      if (!checkConnectionIntegrity()) { return; }
 
 #if UNITY_EDITOR
       if (UnityEditor.EditorApplication.isCompiling) {
@@ -512,6 +499,36 @@ namespace Leap.Unity {
         _leapController.StopConnection();
         _leapController = null;
       }
+    }
+
+    private float _timeSinceServiceConnectionChecked = 0f;
+    private int _numberOfReconnectionAttempts = 0;
+    /// <summary>
+    /// Checks whether this provider is connected to a service;
+    /// If it is not, attempt to reconnect at regular intervals
+    /// for MAX_RECONNECTION_ATTEMPTS
+    /// </summary>
+    protected bool checkConnectionIntegrity() {
+      if (_leapController.IsServiceConnected) {
+        _timeSinceServiceConnectionChecked = 0f;
+        _numberOfReconnectionAttempts = 0;
+        return true;
+      } else if (_numberOfReconnectionAttempts < MAX_RECONNECTION_ATTEMPTS) {
+        _timeSinceServiceConnectionChecked += Time.unscaledDeltaTime;
+
+        if (_timeSinceServiceConnectionChecked > RECONNECTION_INTERVAL) {
+          _timeSinceServiceConnectionChecked = 0f;
+          _numberOfReconnectionAttempts++;
+
+          Debug.LogError("Leap Service not connected; attempting to reconnect for try " +
+                          _numberOfReconnectionAttempts+"/"+MAX_RECONNECTION_ATTEMPTS + "...", this);
+          using (new ProfilerSample("Reconnection Attempt")) {
+            destroyController();
+            createController();
+          }
+        }
+      }
+      return false;
     }
 
     protected void onHandControllerConnect(object sender, LeapEventArgs args) {
