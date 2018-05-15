@@ -38,7 +38,7 @@ namespace Leap.Unity.Galaxies {
 
     protected virtual void Start() {
       if (galaxySimInterop == null) {
-        galaxySimInterop = GetComponent<GalaxiesUISimInterop>();
+        galaxySimInterop = FindObjectOfType<GalaxiesUISimInterop>();
       }
     }
 

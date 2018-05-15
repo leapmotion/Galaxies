@@ -1,19 +1,23 @@
-﻿public class UISliderInt_SetNumGalaxies : UISliderInt {
+﻿namespace Leap.Unity.Galaxies {
 
-  public override int GetMaxValue() {
-    return GalaxyUIOperations.GetMaxNumGalaxies();
-  }
+  public class UISliderInt_SetNumGalaxies : UISliderInt {
 
-  public override int GetMinValue() {
-    return GalaxyUIOperations.GetMinNumGalaxies();
-  }
+    public override int GetMaxValue() {
+      return GalaxyUIOperations.GetMaxNumGalaxies();
+    }
 
-  protected override float GetModelValue() {
-    return GalaxyUIOperations.GetNumGalaxies();
-  }
+    public override int GetMinValue() {
+      return GalaxyUIOperations.GetMinNumGalaxies();
+    }
 
-  protected override void SetModelValue(float sliderValue) {
-    GalaxyUIOperations.SetNumGalaxies((int)sliderValue);
+    protected override float GetModelValue() {
+      return GalaxyUIOperations.GetNumGalaxies();
+    }
+
+    protected override void SetModelValue(float sliderValue) {
+      GalaxyUIOperations.SetNumGalaxies((int)sliderValue);
+    }
+
   }
 
 }
