@@ -57,6 +57,7 @@ public abstract class UISlider : UIButton {
   protected virtual void Update() {
     if (_firstUpdate) {
       refreshSimValue();
+      refreshMinMaxValues();
 
       _firstUpdate = false;
     }
@@ -115,6 +116,22 @@ public abstract class UISlider : UIButton {
   protected abstract float GetModelValue();
 
   /// <summary>
+  /// Optionally override this method to cause the slider to initialize itself using
+  /// minimum value from the data model.
+  /// </summary>
+  protected virtual float GetMinModelValue() {
+    return slider.minHorizontalValue;
+  }
+
+  /// <summary>
+  /// Optionally override this method to cause the slider to initialize itself using
+  /// maximum value from the data model.
+  /// </summary>
+  protected virtual float GetMaxModelValue() {
+    return slider.maxHorizontalValue;
+  }
+
+  /// <summary>
   /// Moves this slider to match the data model's current value.
   /// </summary>
   private void refreshSimValue() {
@@ -123,6 +140,11 @@ public abstract class UISlider : UIButton {
     if (sliderValue != simValue) {
       slider.HorizontalSliderValue = simValue;
     }
+  }
+
+  private void refreshMinMaxValues() {
+    slider.minHorizontalValue = GetMinModelValue();
+    slider.maxHorizontalValue = GetMaxModelValue();
   }
 
 }

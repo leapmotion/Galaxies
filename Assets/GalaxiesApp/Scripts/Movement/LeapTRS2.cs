@@ -122,6 +122,97 @@ public class LeapTRS2 : MonoBehaviour, IRuntimeGizmoComponent {
 
   #endregion
 
+  #region TRS Getters (for data feedback)
+
+  /// <summary>
+  /// Gets whether TRS could happen if hands did the proper gestures.
+  /// </summary>
+  public bool isEnabledAndConfigured {
+    get {
+      return this.isActiveAndEnabled
+        && pinchGestureA != null
+        && pinchGestureB != null
+        && pinchGestureA.isActiveAndEnabled
+        && pinchGestureA.provider != null
+        && pinchGestureB.isActiveAndEnabled
+        && pinchGestureB.provider != null;
+    }
+  }
+
+  /// <summary>
+  /// Gets whether TRS is imminent because the attached pinch gestures are both eligible
+  /// to activate pinches. This is only different from isEnabledAndConfigured if
+  /// the pinch gestures have specific eligibility requirements beyond basic pinching.
+  /// </summary>
+  public bool isEligible {
+    get {
+      return isEnabledAndConfigured
+        && pinchGestureA.isEligible
+        && pinchGestureB.isEligible;
+    }
+  }
+
+  /// <summary>
+  /// Gets whether either the left or right pinch is actively tracked by this TRS
+  /// controller.
+  /// </summary>
+  public bool isSinglyActive {
+    get {
+      return _aPoses.Count > 0 || _bPoses.Count > 0;
+    }
+  }
+
+  /// <summary>
+  /// Gets whether the left pinch pose is actively tracked by this TRS controller.
+  /// </summary>
+  public bool isLeftActive {
+    get {
+      return _aPoses.Count > 0;
+    }
+  }
+
+  /// <summary>
+  /// Gets the latest left pinch pose actively tracked by this TRS controller. Will raise
+  /// an error if there is no such pose (see isLeftActive).
+  /// </summary>
+  public Pose leftPinchPose {
+    get {
+      return _aPoses.Get(0);
+    }
+  }
+
+  /// <summary>
+  /// Gets whether the right pinch pose is actively tracked by this TRS controller.
+  /// </summary>
+  public bool isRightActive {
+    get {
+      return _bPoses.Count > 0;
+    }
+  }
+
+  /// <summary>
+  /// Gets the latest right pinch pose actively tracked by this TRS controller. Will raise
+  /// an error if there is no such pose (see isRightActive).
+  /// </summary>
+  public Pose rightPinchPose {
+    get {
+      return _bPoses.Get(0);
+    }
+  }
+
+
+  /// <summary>
+  /// Gets whether both the left and right pinch poses are active and being tracked by
+  /// this TRS controller.
+  /// </summary>
+  public bool isDoublyActive {
+    get {
+      return _aPoses.Count > 0 && _bPoses.Count > 0;
+    }
+  }
+
+  #endregion
+
   #region TRS
 
   private RingBuffer<Pose> _aPoses = new RingBuffer<Pose>(2);

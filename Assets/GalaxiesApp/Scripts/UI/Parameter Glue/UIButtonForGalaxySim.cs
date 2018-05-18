@@ -44,4 +44,12 @@ namespace Leap.Unity.Galaxies {
 
   }
 
+  public abstract class UISliderIntForGalaxySim : UISliderForGalaxySim {
+
+    protected override float filterSliderValue(float sliderValue) {
+      return Mathf.RoundToInt(sliderValue);
+    }
+
+  }
+
 }
