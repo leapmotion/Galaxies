@@ -83,14 +83,20 @@ namespace Leap.Unity.Galaxies {
       // Fingers.
       for (int fIdx = 0; fIdx < hand.Fingers.Count; fIdx++) {
         var finger = hand.Fingers[fIdx];
-        var tipPos = finger.TipPosition.ToVector3();
-        var tipRadius = finger.bones[3].Length * 0.5f;
-        var tipNormal = finger.bones[3].Basis.yBasis.ToVector3();
-        var tipOffsetAlongNormal = tipRadius;
-        tipPos += tipNormal * tipOffsetAlongNormal;
-        drawCircle(tipPos, tipRadius, tipNormal, drawer, 16);
+        var radius = finger.bones[3].Length * 0.5f;
+
+        for (int bId = 1; bId < finger.bones.Length; bId++) {
+          var bone = finger.bones[bId];
+          
+          var boneNormal = bone.Basis.yBasis.ToVector3();
+          var offsetAlongNormal = radius;
+
+          var bonePos = bone.NextJoint.ToVector3() + boneNormal * offsetAlongNormal;
+
+          drawCircle(bonePos, radius, boneNormal, drawer, 16);
+        }
       }
-      
+
       // TRS gizmos.
       if (leapTRS2 != null && leapTRS2.isEnabledAndConfigured) {
 
@@ -98,11 +104,9 @@ namespace Leap.Unity.Galaxies {
         Color targetGizmoColor;
         if (!pinchGesture.isEligible) {
           targetGizmoColor = ineligibleGizmoColor;
-        }
-        else if (pinchGesture.isActive) {
+        } else if (pinchGesture.isActive) {
           targetGizmoColor = activeGizmoColor;
-        }
-        else {
+        } else {
           targetGizmoColor = eligibleGizmoColor;
         }
         currentGizmoColor = currentGizmoColor.Lerp(targetGizmoColor,
@@ -142,16 +146,16 @@ namespace Leap.Unity.Galaxies {
         }
       }
     }
-    
+
     private void drawCircle(Vector3 pos, float radius,
-                            RuntimeGizmoDrawer drawer, int resolution=27) {
+                            RuntimeGizmoDrawer drawer, int resolution = 27) {
       var dirToCam = (facingCamera.transform.position - pos).normalized;
       var radialStartDir = dirToCam.Perpendicular();
 
       drawer.DrawWireArc(pos, dirToCam, radialStartDir, radius, 1f, resolution);
     }
     private void drawCircle(Vector3 pos, float radius, Vector3 normal,
-                            RuntimeGizmoDrawer drawer, int resolution=27) {
+                            RuntimeGizmoDrawer drawer, int resolution = 27) {
       var radialStartDir = normal.Perpendicular();
 
       drawer.DrawWireArc(pos, normal, radialStartDir, radius, 1f, resolution);
