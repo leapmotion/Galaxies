@@ -41,14 +41,14 @@
     uv.z = 0;
     uv.w = 0;
 
-    float4 currTex, prevTex;
+    float4 currTex, prevTex, lastTex;
 	  float4 currPosition, prevPosition;
 
 #ifdef INTERPOLATION_CROSSES_TEX_BOUNDARY
 	{
 		currTex = tex2Dlod(_CurrPosition, uv);
 		prevTex = tex2Dlod(_PrevPosition, uv);
-		float4 lastTex = tex2Dlod(_LastPosition, uv);
+		lastTex = tex2Dlod(_LastPosition, uv);
 
 		currPosition = lerp(prevTex, currTex, _CurrInterpolation);
 		prevPosition = lerp(lastTex, prevTex, _PrevInterpolation);
@@ -57,6 +57,7 @@
 	{
 		currTex = tex2Dlod(_CurrPosition, uv);
 		prevTex = tex2Dlod(_PrevPosition, uv);
+    lastTex = tex2Dlod(_LastPosition, uv);
 
 		currPosition = lerp(prevTex, currTex, _CurrInterpolation);
 		prevPosition = lerp(prevTex, currTex, _PrevInterpolation);
@@ -101,7 +102,7 @@
     //float4 vel0 = currPosition - prevPosition;
     //float4 vel1 = prevPosition - lastPosition;
     //o.color = _PreScalar * length(vel0 - vel1);
-	o.color = float4(1, 0, 0, 1);
+    o.color = _PreScalar * abs(length(lastTex - prevTex) - length(prevTex - currTex));
 #endif
 
 #if BY_BLACK_HOLE
