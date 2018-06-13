@@ -14,14 +14,14 @@ MonoBehaviour:
   blitMode: 3
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   enableStarGradient: 1
-  preScalar: 15094
+  preScalar: 4296.91
   starRamp:
     serializedVersion: 2
     key0: {r: 0, g: 0, b: 0, a: 1}
-    key1: {r: 0.043953005, g: 0.16888772, b: 0.273, a: 1}
-    key2: {r: 0.378, g: 0.36355412, b: 0.3659618, a: 0}
-    key3: {r: 0.666, g: 0.42720398, b: 0.30302998, a: 0}
-    key4: {r: 1, g: 0.81944174, b: 0.6273585, a: 0}
+    key1: {r: 0.07165712, g: 0.2801143, b: 0.45599997, a: 1}
+    key2: {r: 0.383, g: 0.37760562, b: 0.37760562, a: 0}
+    key3: {r: 0.644, g: 0.4163793, b: 0.2997931, a: 0}
+    key4: {r: 1, g: 0.8220339, b: 0.6271187, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
@@ -44,5 +44,5 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
-  postScalar: 4
+  postScalar: 1
   profile: {fileID: 0}
