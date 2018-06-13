@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Leap.Unity;
 using Leap.Unity.DevGui;
-using Leap.Unity.Attributes;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
 using Leap.Unity.Animation;
@@ -320,11 +318,11 @@ public class GalaxyRenderer : MonoBehaviour {
     mat.SetFloat("_CurrInterpolation", _currRenderState.interpolationFraction);
     mat.SetFloat("_PrevInterpolation", _prevRenderState.interpolationFraction);
 
-    if (_currRenderState.currPosition != _prevRenderState.currPosition) {
-      mat.EnableKeyword(CROSS_TEX_KEYWORD);
-    } else {
-      mat.DisableKeyword(CROSS_TEX_KEYWORD);
-    }
+    //if (_currRenderState.currPosition != _prevRenderState.currPosition) {
+    //  mat.EnableKeyword(CROSS_TEX_KEYWORD);
+    //} else {
+    //  mat.DisableKeyword(CROSS_TEX_KEYWORD);
+    //}
 
     mat.SetFloat("_PreScalar", preset.preScalar);
     mat.SetFloat("_PostScalar", preset.postScalar);
