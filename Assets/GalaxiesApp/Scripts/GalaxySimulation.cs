@@ -221,6 +221,7 @@ public unsafe class GalaxySimulation : MonoBehaviour {
   public float simulationTime = 0;
   public UniverseState* mainState;
   public UniverseState* prevState;
+  private int _initialBlackHoleCount;
 
   private UniverseState* _trailState;
   private bool _trailResetQueued = false;
@@ -262,6 +263,7 @@ public unsafe class GalaxySimulation : MonoBehaviour {
     mainState = NBodyC.CreateGalaxy(blackHoleCount);
     mainState->time = 0;
     mainState->frames = 0;
+    _initialBlackHoleCount = blackHoleCount;
 
     {
       Random.InitState(_seed);
@@ -640,13 +642,12 @@ public unsafe class GalaxySimulation : MonoBehaviour {
   }
 
   private void applyDrags(params Drag[] drags) {
-    simulateMat.SetInt("_NumDrags", drags.Length);
-
     float[] floatArray = new float[4];
     Matrix4x4[] matArray = new Matrix4x4[4];
-    drags.Query().Select(t => (float)t.index / mainState->numBlackHoles).FillArray(floatArray);
+    drags.Query().Select(t => (float)t.index / _initialBlackHoleCount).FillArray(floatArray);
     drags.Query().Select(t => t.deltaTransform).FillArray(matArray);
 
+    simulateMat.SetInt("_NumDrags", drags.Length);
     simulateMat.SetFloatArray("_DragIds", floatArray);
     simulateMat.SetMatrixArray("_DragTransforms", matArray);
 
