@@ -7,6 +7,7 @@ using Leap.Unity.Query;
 using Leap.Unity.Attributes;
 using Leap.Unity.DevGui;
 using Leap.Unity.RuntimeGizmos;
+using System.Linq;
 
 public interface IPropertyMultiplier {
   float multiplier { get; }
@@ -187,7 +188,7 @@ public unsafe class GalaxySimulation : MonoBehaviour {
     public Matrix4x4 startTransform;
     public Matrix4x4 currTransform;
 
-    public int index;
+    public int id;
 
     public Matrix4x4 deltaTransform {
       get {
@@ -586,7 +587,7 @@ public unsafe class GalaxySimulation : MonoBehaviour {
     galaxyRenderer.UpdatePositions(currPos, prevPos, nextPos, Mathf.InverseLerp(prevState->time, mainState->time, simulationTime));
   }
 
-  public void BeginDrag(Matrix4x4 startTransform, int blackHoleIndex) {
+  public void BeginDrag(Matrix4x4 startTransform, int blackHoleId) {
     if (tmpCurr == null) {
       tmpCurr = RenderTexture.GetTemporary(currPos.width, currPos.height, 0, currPos.format, RenderTextureReadWrite.Linear);
       tmpNext = RenderTexture.GetTemporary(currPos.width, currPos.height, 0, currPos.format, RenderTextureReadWrite.Linear);
@@ -601,7 +602,7 @@ public unsafe class GalaxySimulation : MonoBehaviour {
       Graphics.CopyTexture(prevPos, tmpPrev);
     }
 
-    if (drags.Query().Any(d => d.index == blackHoleIndex)) {
+    if (drags.Query().Any(d => d.id == blackHoleId)) {
       Debug.LogError("Cannot start a second drag with an existing index.");
       return;
     }
@@ -609,12 +610,12 @@ public unsafe class GalaxySimulation : MonoBehaviour {
     drags.Add(new Drag() {
       startTransform = startTransform,
       currTransform = startTransform,
-      index = blackHoleIndex
+      id = blackHoleId
     });
   }
 
-  public void EndDrag(int blackHoleIndex) {
-    int index = drags.Query().IndexOf(g => g.index == blackHoleIndex);
+  public void EndDrag(int blackHoleId) {
+    int index = drags.Query().IndexOf(g => g.id == blackHoleId);
     var drag = drags[index];
     drags.RemoveAt(index);
 
@@ -632,8 +633,8 @@ public unsafe class GalaxySimulation : MonoBehaviour {
     }
   }
 
-  public void UpdateDrag(Matrix4x4 currTransform, int blackHoleIndex) {
-    int index = drags.Query().IndexOf(g => g.index == blackHoleIndex);
+  public void UpdateDrag(Matrix4x4 currTransform, int blackHoleId) {
+    int index = drags.Query().IndexOf(g => g.id == blackHoleId);
     var drag = drags[index];
     drag.currTransform = currTransform;
     drags[index] = drag;
@@ -642,14 +643,22 @@ public unsafe class GalaxySimulation : MonoBehaviour {
   }
 
   private void applyDrags(params Drag[] drags) {
-    float[] floatArray = new float[4];
-    Matrix4x4[] matArray = new Matrix4x4[4];
-    drags.Query().Select(t => (float)t.index / _initialBlackHoleCount).FillArray(floatArray);
-    drags.Query().Select(t => t.deltaTransform).FillArray(matArray);
+    Drag drag0 = drags.FirstOrDefault();
+    Drag drag1 = drags.Skip(1).FirstOrDefault();
 
-    simulateMat.SetInt("_NumDrags", drags.Length);
-    simulateMat.SetFloatArray("_DragIds", floatArray);
-    simulateMat.SetMatrixArray("_DragTransforms", matArray);
+    if (drags.Length >= 1) {
+      simulateMat.SetInt("_DragId0", drag0.id);
+      simulateMat.SetMatrix("_DragTransform0", drag0.deltaTransform);
+    } else {
+      simulateMat.SetInt("_DragId0", 0);
+    }
+
+    if (drags.Length >= 2) {
+      simulateMat.SetInt("_DragId1", drag1.id);
+      simulateMat.SetMatrix("_DragTransform1", drag1.deltaTransform);
+    } else {
+      simulateMat.SetInt("_DragId1", 0);
+    }
 
     simulateMat.SetTexture("_DragPositions", tmpCurr);
     Graphics.Blit(null, currPos, simulateMat, 2);

@@ -35,9 +35,10 @@
   float _MaxDiscRadius;
   float _MaxDiscHeight;
 
-  uint _NumDrags;
-  float _DragIds[4];
-  float4x4 _DragTransforms[4];
+  uint _DragId0;
+  float4x4 _DragTransform0;
+  uint _DragId1;
+  float4x4 _DragTransform1;
 
   struct appdata {
     float4 vertex : POSITION;
@@ -119,7 +120,9 @@
 
     discPos += planetPos;
 
-    float planetIndex = index / (float)_PlanetCount;
+    //float planetIndex = asfloat(1u << index);
+    //float planetIndex = index / (float)_PlanetCount;
+    float planetIndex = index;
 
     fragOut o;
     o.dest0 = float4(discPos - discVel, planetIndex);
@@ -128,17 +131,18 @@
   }
 
   float4 applyDrag(v2f i) : SV_Target {
-	float4 pos = tex2D(_DragPositions, i.uv);
+    float4 pos = tex2D(_DragPositions, i.uv);
+    uint starId = 1u << (uint)(pos.w);
 
-	for (uint i = 0; i < _NumDrags; i++) {
-		float id = _DragIds[i];
-		float4x4 transform = _DragTransforms[i];
-		if (abs(pos.w - id) < 0.01) {
-			pos.xyz = mul(transform, float4(pos.xyz, 1));
-		}
-	}
+    if ((starId & _DragId0) != 0) {
+      pos.xyz = mul(_DragTransform0, float4(pos.xyz, 1));
+    }
 
-	return pos;
+    if ((starId & _DragId1) != 0) {
+      pos.xyz = mul(_DragTransform1, float4(pos.xyz, 1));
+    }
+
+    return pos;
   }
 
   ENDCG
@@ -167,12 +171,12 @@
       ENDCG
     }
 
-	  //Pass 2: perform drag calculations
+    //Pass 2: perform drag calculations
     Pass {
-	    CGPROGRAM
+      CGPROGRAM
         #pragma vertex vert
-	      #pragma fragment applyDrag
-	    ENDCG
-	  }
+        #pragma fragment applyDrag
+      ENDCG
+    }
   }
 }

@@ -80,18 +80,24 @@ public class GalaxyIE : MonoBehaviour, IPropertyMultiplier {
     _numGrasped++;
     _sim.simulate = false;
 
-    int index = _spawned.IndexOf(graspedBehaviour);
-    _sim.BeginDrag(_renderer.displayAnchor.worldToLocalMatrix * graspedBehaviour.transform.localToWorldMatrix, index);
+    unsafe {
+      int index = _spawned.IndexOf(graspedBehaviour);
+      int id = _sim.mainState->blackHoles[index].id;
+      _sim.BeginDrag(_renderer.displayAnchor.worldToLocalMatrix * graspedBehaviour.transform.localToWorldMatrix, id);
+    }
   }
 
   public void OnRelease(BlackHoleBehaviour releasedBehaviour) {
     _numGrasped--;
 
-    int index = _spawned.IndexOf(releasedBehaviour);
-    _sim.EndDrag(index);
+    unsafe {
+      int index = _spawned.IndexOf(releasedBehaviour);
+      int id = _sim.mainState->blackHoles[index].id;
+      _sim.EndDrag(id);
 
-    if (_numGrasped == 0) {
-      _sim.simulate = true;
+      if (_numGrasped == 0) {
+        _sim.simulate = true;
+      }
     }
   }
 
@@ -104,7 +110,8 @@ public class GalaxyIE : MonoBehaviour, IPropertyMultiplier {
             continue;
           }
 
-          _sim.UpdateDrag(_renderer.displayAnchor.worldToLocalMatrix * _spawned[i].transform.localToWorldMatrix, i);
+          int id = _sim.mainState->blackHoles[i].id;
+          _sim.UpdateDrag(_renderer.displayAnchor.worldToLocalMatrix * _spawned[i].transform.localToWorldMatrix, id);
         }
 
         GalaxySimulation.BlackHole* ptr = _sim.mainState->blackHoles;
