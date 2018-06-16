@@ -331,6 +331,7 @@ public class GalaxyRenderer : MonoBehaviour {
     mat.SetFloat("_Scale", _displayAnchor.lossyScale.x);
     mat.SetFloat("_Size", _starSize);
 
+    mat.SetFloat("_MaxBlackHoleCount", _sim.initialBlackHoleCount);
 
     float finalBrightness = _starBrightness;
     foreach (var multiplier in startBrightnessMultipliers) {

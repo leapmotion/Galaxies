@@ -44,5 +44,5 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
-  postScalar: 1
+  postScalar: 2.33
   profile: {fileID: 0}

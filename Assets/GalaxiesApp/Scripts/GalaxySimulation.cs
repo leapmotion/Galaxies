@@ -91,7 +91,7 @@ public unsafe class GalaxySimulation : MonoBehaviour {
   [DevValue("Mass Affects Density")]
   public float blackHoleMassAffectsDensity = 1;
 
-  [Range(1, 100)]
+  [Range(1, 10)]
   [DevValue("Count")]
   public int blackHoleCount = 3;
 
@@ -179,6 +179,12 @@ public unsafe class GalaxySimulation : MonoBehaviour {
         t *= multiplier.multiplier;
       }
       return t;
+    }
+  }
+
+  public int initialBlackHoleCount {
+    get {
+      return _initialBlackHoleCount;
     }
   }
 

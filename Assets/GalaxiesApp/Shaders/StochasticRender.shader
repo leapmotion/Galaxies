@@ -33,6 +33,8 @@
   float _PreScalar;
   float _PostScalar;
 
+  float _MaxBlackHoleCount;
+
   v2f vert(uint id : SV_VertexID) {
     float4 uv;
     uv.x = (id / 1024) / 1024.0;
@@ -83,7 +85,7 @@
 #endif
 
 #if BY_BLACK_HOLE
-    o.color = currPosition.w;
+    o.color = currPosition.w / _MaxBlackHoleCount;
 #endif
 
 #if USE_RAMP
