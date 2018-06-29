@@ -160,7 +160,7 @@ public class GalaxyRenderer : MonoBehaviour {
 
   private void OnEnable() {
     _renderStarCommands = new CommandBuffer();
-    _renderStarCommands.name = "Draw Starts";
+    _renderStarCommands.name = "Draw Stars";
 
     _combineStarCommands = new CommandBuffer();
     _combineStarCommands.name = "Combine Stars";
@@ -237,7 +237,9 @@ public class GalaxyRenderer : MonoBehaviour {
 
     _renderStarCommands.Blit(BuiltinRenderTextureType.CameraTarget, _backupTex);
     _renderStarCommands.SetRenderTarget(BuiltinRenderTextureType.CameraTarget);
-    _renderStarCommands.ClearRenderTarget(clearDepth: false, clearColor: true, backgroundColor: Color.black);
+    _renderStarCommands.ClearRenderTarget(clearDepth: false,
+      clearColor: true,
+      backgroundColor: Color.black);
 
     Material mat = null;
 
@@ -255,7 +257,7 @@ public class GalaxyRenderer : MonoBehaviour {
 
     _renderStarCommands.DrawProcedural(Matrix4x4.identity, mat, 0, MeshTopology.Points, _currRenderState.currPosition.width * _currRenderState.currPosition.height);
 
-    _combineStarCommands.Blit(_backupTex, new RenderTargetIdentifier(BuiltinRenderTextureType.CameraTarget), _galaxyCombineMat);
+    _combineStarCommands.Blit(_backupTex, BuiltinRenderTextureType.CameraTarget, _galaxyCombineMat);
   }
 
   private void updateMaterials() {

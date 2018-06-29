@@ -687,6 +687,8 @@ public unsafe class GalaxySimulation : MonoBehaviour {
 
       //Update trails
       {
+        // When the mainState matches a trail entry, we can remove that trail entry
+        // (These are _future_ trails, not past trails :P)
         foreach (var pair in _trails) {
           if (mainState->frames > pair.Value.startFrame && pair.Value.queue.Count > 0) {
             pair.Value.queue.PopFront();
