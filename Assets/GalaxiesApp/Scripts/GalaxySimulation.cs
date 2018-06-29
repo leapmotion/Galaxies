@@ -242,7 +242,6 @@ public unsafe class GalaxySimulation : MonoBehaviour {
   private List<Vector3> _trailVerts = new List<Vector3>();
   private List<int> _trailIndices = new List<int>();
   private MaterialPropertyBlock _trailPropertyBlock;
-  private Dictionary<int, int[]> _trailIndexCache = new Dictionary<int, int[]>();
 
   public float pow = 5;
 
@@ -545,18 +544,13 @@ public unsafe class GalaxySimulation : MonoBehaviour {
 
           int[] indexArray;
           using (new ProfilerSample("Build Index Array")) {
-            int goalLength = Mathf.NextPowerOfTwo(_trailIndices.Count);
-
-            if (!_trailIndexCache.TryGetValue(goalLength, out indexArray)) {
-              indexArray = new int[goalLength];
-              _trailIndexCache[goalLength] = indexArray;
-            }
+            indexArray = ArrayPool<int>.Spawn(_trailIndices.Count);
 
             for (int i = 0; i < _trailIndices.Count; i++) {
               indexArray[i] = _trailIndices[i];
             }
 
-            for (int i = _trailIndices.Count; i < goalLength; i++) {
+            for (int i = _trailIndices.Count; i < indexArray.Length; i++) {
               indexArray[i] = 0;
             }
           }
@@ -565,6 +559,9 @@ public unsafe class GalaxySimulation : MonoBehaviour {
             _trailMesh.Clear();
             _trailMesh.SetVertices(_trailVerts);
             _trailMesh.SetIndices(indexArray, MeshTopology.Lines, 0);
+
+            ArrayPool<int>.Recycle(indexArray);
+            indexArray = null;
           }
 
           if (_trailResetQueued) {
